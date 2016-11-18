@@ -1,0 +1,6 @@
+1、获取图片的真是高度和宽度
+myImage.addEventListener('onload', function() {
+	console.log('我的宽度是: ', this.naturalWidth);
+	console.log('我的高度是: ', this.naturalHeight);
+});
+不论你如何用CSS来变换一个img元素的高度和宽度，图片的原始大小都能用它们获取到

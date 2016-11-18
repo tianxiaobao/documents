@@ -1,0 +1,18 @@
+在div里嵌套了img，img底部会多出一些间隙。照常理，div的高度应该刚好等于img的高度，但事实是经常会碰到div的高度比img的高度大的情况
+<div>
+  <img src="" />
+</div>
+造成div高度大于img高度的原因如下：
+因为img默认是按基线（baseline）对齐的，什么是基线？记得四线三格的英语本吗，中间第三条线就是基线。
+
+解决方法
+第一，给img标签添加display:block。
+img {display:block}
+第二，当div中没有文字时
+div {font-size:0}或者div {line-height:0}
+第三，定义图片img标签vertical-align:bottom，vertical-align:middle，vertical-align:top
+img {vertical-align:bottom}或
+img {vertical-align:middle}或
+img {vertical-align:top}
+第四：img进行浮动
+img {float:left}

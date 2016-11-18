@@ -1,0 +1,29 @@
+原理就是“把兄弟元素作为祖先元素使用”
+大致分为下面3步：
+1.原先的父级容器只处理结构，不负责外观。CSS代码如下：
+.container {
+    min-height: 120px;
+    position: relative; z-index: 1;
+}
+其中，这里的z-index:1用来创建新的层叠上下文，这样子元素的z-index:-1不会超出容器
+2.新建一个元素负责容器的外观，放置在输入框的后面，使用absolute拉伸和容器尺寸一致。于是HTML结构变成这样：
+<div class="container">
+    <input id="input" class="input">
+    <!-- 下面的label就是新建的负责容器外观的元素 -->
+    <label class="border" for="input"></label>
+</div>
+css代码
+.border {
+    /* 尺寸自适应容器大小，假装是容器 */
+    position: absolute; left: 0; right: 0; top: 0; bottom: 0; 
+    /* 在输入框的下面 */
+    z-index: -1;
+    /* 外观模拟 */
+    border: 1px solid #bbb;
+}
+绝对定位元素，如果没有具体的width/height限定，left/right以及top/bottom对立方位的数值会拉伸元素的尺寸。
+3.通过相邻兄弟选择器，控制容器的样式变化，CSS代码如下
+.input:focus + .border {
+    /* 容器边框颜色高亮 */
+    border-color: #1271E0;    
+}

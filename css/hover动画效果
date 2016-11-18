@@ -1,0 +1,40 @@
+第一种 添加动画的形式，动画单写
+.demo:hover .tip{display: block;animation: moveon 0.2s;-moz-animation: moveon 0.2s;-webkit-animation: moveon 0.2s;-o-animation: moveon 0.2s;}
+@keyframes moveon{
+  0% {left: -130px;}
+  100% {left: -90px;}
+}
+@-moz-keyframes moveon
+{
+  0% {left: -130px;}
+  100% {left: -90px;}
+}
+@-webkit-keyframes moveon
+{
+  0% {left: -130px;}
+  100% {left: -90px;}
+}
+@-o-keyframes moveon
+{
+  0% {left: -130px;}
+  100% {left: -90px;}
+}
+第二种 变化的属性，事件，效果写在类里，变换后的值写在hover里
+.demo{
+	-webkit-transition:border-color 0.3s ease;
+	-moz-transition:border-color 0.3s ease;
+	-ms-transition:border-color 0.3s ease;
+	-o-transition:border-color 0.3s ease;
+	transition:border-color 0.3s ease;
+}
+.demo:hover{
+	border-color: #A3D7FF;
+}
+
+动画属性：
+animation-name			规定需要绑定到选择器的keyframe 名称。。
+animation-duration		规定完成动画所花费的时间，以秒或毫秒计。
+animation-timing-function	规定动画的速度曲线。
+animation-delay			规定在动画开始之前的延迟。
+animation-iteration-count	规定动画应该播放的次数。值为infinite无限循环
+animation-direction		规定是否应该轮流反向播放动画。

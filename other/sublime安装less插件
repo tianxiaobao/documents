@@ -1,0 +1,16 @@
+Preferences > package control > install package
+1、安装Less
+2、安装Lessc
+3、安装Less2Css
+4、cmd 执行
+npm install less -gd
+npm install -g less-plugin-clean-css
+npm-install -g less-plugin-autoprefix
+新建.less文件，保存时就会生成对应的css文件到同级目录
+
+Preferences > package settings > Less2Css > settings-user 
+加入
+{
+  "minify": false
+}
+避免转换为css文件时进行压缩，设置为true时将对css代码进行压缩处理

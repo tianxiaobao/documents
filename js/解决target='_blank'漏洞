@@ -1,0 +1,42 @@
+一、问题的出现
+通常我们知道使用 window.open();语句时，我们可以获得opener句柄。但也许没注意到，通过target="_blank"点开的窗口、标签页，
+子窗口也能捕获opener句柄，通过这个句柄，子窗口可以修改父窗口的页面地址，让父窗口显示指定的页面。关键代码如下：
+if (window.opener) {
+  window.opener.location = "https://www.webhek.com";
+}
+例子如下：
+父窗口代码：
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+	</head>
+<body>
+<a href="info.html" target="_blank">链接到子窗口</a>
+</body>
+<html>
+子窗口代码：
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+	</head>
+<body>
+子窗口
+</body>
+<script type="text/javascript">
+if (window.opener) {
+  window.opener.location = "https://www.baidu.com";
+}
+</script>
+<html>
+当在父窗口点击子窗口的链接时，弹出的子窗口就会将父窗口的链接地址更改为百度的地址。
+
+二、解决办法
+为了限制子页面通过window.opener控制父页面，我们需要在页面上所有使用了target="_blank"的链接上添加rel="noopener"属性，
+但是，火狐浏览器并不支持这个有特殊意义的属性，火狐浏览器里需要写成rel="noreferrer"，我们可以把它们的写法合并，
+写成rel="noopener noreferrer"。这样，子页面就获取不到父页面的句柄了。

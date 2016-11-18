@@ -1,0 +1,64 @@
+一、htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。
+二、启用.htaccess，需要修改httpd.conf，启用AllowOverride
+打开httpd.conf(在那里? APACHE目录的CONF目录里面),用文本编纂器打开后,查找 
+(1) 
+Options FollowSymLinks 
+AllowOverride None 
+改为 
+Options FollowSymLinks 
+AllowOverride All
+
+三、阻止恶意网站攻击
+
+指定IP阻挡访问
+	order allow,deny
+	deny from 192.168.44.201
+	deny from 224.39.163.12
+	deny from 172.16.7.92
+	allow from all
+上面的代码展示了如何禁止3个不同的IP对网站的访问。
+
+指定IP段阻挡访问
+如果你手头有很多IP要禁止，觉得一个一个指定太麻烦，下面是如何一次禁止一个IP段：
+	order allow,deny
+	deny from 192.168.
+	deny from 10.0.0.
+	allow from all
+	
+指定域名阻挡访问
+	order allow,deny
+	deny from some-evil-isp.com
+	deny from subdomain.another-evil-isp.com
+	allow from all
+上面的代码可以阻止特定的 ISP 对网站的访问。
+
+使用.Htaccess禁止机器爬虫(bots,spiders)
+在中国，我想你需要的搜索引擎只有谷歌和百度，其它的小搜索引擎，比如搜狗、360等都可以忽略，否则，这些不重要的搜索引擎的爬虫不但不会给你带来好处，而且会爬死你的网站。下面就是如何禁止它们的方法：
+	#get rid of the bad bot
+	RewriteEngine on
+	RewriteCond %{HTTP_USER_AGENT} ^BadBot
+	RewriteRule ^(.*)$ http://go.away/
+	
+上面是禁止一种爬虫，如果想禁止多个，你可以在.Htaccess里这样配置：
+	#get rid of bad bots
+	RewriteEngine on
+	RewriteCond %{HTTP_USER_AGENT} ^BadBot [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^EvilScraper [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^FakeUser
+	RewriteRule ^(.*)$ http://go.away/
+这段代码就同时阻止了3中不同的爬虫，注意其中的 “[OR]” 。
+
+使用.Htaccess禁止盗链(hotlink)
+如果你的网站很受人欢迎，肯定就会有喜欢你网站上的图片或视频等资源，有些人会没有职业道德的直接嵌入它们的页面中，占用或浪费你的带宽，影响你的服务器的稳定。对于这样的盗链行为，使用.Htaccess很容易屏蔽它们的盗取，就像下面：
+	RewriteEngine on
+	RewriteCond %{HTTP_REFERER} ^http://.*somebadforum\.com [NC]
+	RewriteRule .* - [F] 
+在.Htaccess中添加了上面这段代码后，当somebadforum.com网站盗链你的网站资源时，服务器会返回403 Forbidden错误，你的带宽将不再遭受损失。
+
+下面的代码是如何阻止多个网站：
+	RewriteEngine on
+	RewriteCond %{HTTP_REFERER} ^http://.*somebadforum\.com [NC,OR]
+	RewriteCond %{HTTP_REFERER} ^http://.*example\.com [NC,OR]
+	RewriteCond %{HTTP_REFERER} ^http://.*lastexample\.com [NC]
+	RewriteRule .* - [F] 
+你也看到了， .htaccess是一种非常强大的网站服务器配置工具，通过它，你能对网站服务器拥有丰富自由的掌控，而是解决方法通常是非常的简单、优雅、基本上不需要重启服务器，也就是立即生效。如果你的服务器上还没有这个配置文件，赶紧建一个吧！

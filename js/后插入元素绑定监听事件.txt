@@ -1,0 +1,58 @@
+此文档为了解决高版本jq给页面后插进元素绑定时间
+jquery绑定事件失效的情况:后插入元素绑定监听事件
+一般我们如下绑定点击等事件：
+<div class="music">
+	<ul>
+		<li>01.mp3</li>
+		<li>02.mp3</li>
+	</ul>
+</div>
+$(function(){
+	$(".music").find("li").on('click',function(){
+		执行操作....
+	});
+});
+通过 jquery 函数 append('<li> ....</li>')或者 prepend('<li>....</li>') 插入到页面上的 li 元素绑定事件。
+1.方法一：在插入时指定事件
+append('<li onclick="some_function()">....</li>');
+2.方法二： 可以在li元素的共同的祖先元素比如ul中进行绑定事件。
+$(function(){
+	$(".music").find("ul").on('click', function(){
+		执行操作....
+	});
+});
+缺点：this对象变成了祖先元素，解救的方法：
+$(function(){
+	$(".music").find("ul").on('click', 'li', function(){
+		alert(this);
+		alert(event.target);
+		alert(event.currentTarget);
+		$("#myAudio").attr("src","music/"+$.trim($(this).text()));
+	});
+});
+使用事件的委托机制，加入一个过滤的参数 'li' ，此时代码中的 this 对象就是 li 而不是他的祖先 ul 了。
+所以在使用冒泡机制的事件委托时，如果使用到了 this 对象，一定要将实际的那个点击对象，通过过滤参数参入进去。
+3.方法三 使用event的属性target。我们知道每一个事件都有一个event对象，他的event.target就是我们直接点击的对象，而event.currentTarget是事件冒泡过程中冒泡到哪里，就代表哪个对象，所以冒泡结束时event.currentTarget代表的就是我们在哪个父元素上绑定事件，他就代表哪个对象，我们可以使用下面的代码进行测试：
+$(".music").find("ul").on('click',function(event){
+	alert(this);
+	alert(event.target);
+	alert(event.currentTarget);
+	$("#myAudio").attr("src","music/"+$.trim($(event.target).text()));
+});
+我们在li的父元素ul上进行绑定，那么冒泡结束，也就是事件进行处理时，this代表的是event.currentTarget，而不是event.target。上面我们可以清楚的看到这一点！清楚了这一点，我们就可以使用 event.target 来获取我们直接点击的那个对象，获得他的属性，设置他的属性，对他进行各种操作。
+我们一定要明白this 和 event.target, event.currentTarget三者的联系和区别。在利用冒泡机制进行事件处理时，一定不要错误地将this 和 event.target等同! 
+4.方法四 使用jquery的live()函数来绑定事件，但是jquery-1.11.1已经不支持live()函数了。从1.7开始推荐使用delegate函数来代替。
+5.方法五 使用delegate()函数：
+$(".music").find("ul").delegate('li', 'click', function(event){
+	alert(this);
+	alert(event.target);
+	alert(event.currentTarget);
+	$("#myAudio").attr("src","music/"+$.trim($(this).text()));
+});
+我们看到使用delegate()函数是，this == event.target == event.currentTarget.所以此时可以使用this来获得我们直接点击的那个元素。
+$("body").on('click', '.music li', function(event){
+	alert(this);
+	alert(event.target);
+	alert(event.currentTarget);
+	$("#myAudio").attr("src","music/"+$.trim($(this).text()));
+});

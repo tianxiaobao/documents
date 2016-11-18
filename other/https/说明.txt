@@ -1,0 +1,51 @@
+https协议  分享功能    百度分享 
+将static文件夹放到项目的根目录 即可
+参考地址
+https://www.hrwhisper.me/baidu-share-not-support-https-solution/
+原文如下：
+获取百度分享的文件
+你可以直接用chrome – F12 – source 查看有什么文件，然后保存（注意微信的需要先点一下，对应的 css 才会出来）
+
+修改一些文件
+直接这么丢上去是会有问题的，你地址栏绿色的小锁会消失 T^T
+
+就是说你虽然是Https的站点，但请求了http的资源，这种混合模式是不好滴
+
+修复方法：
+
+static\api\js\share.js
+domain: {staticUrl: “http://bdimg.share.baidu.com/”} 修改为 domain: {staticUrl: “/”}
+nsClick: “http://nsclick.baidu.com/v.gif”  修改为  nsClick: “/”,
+static\api\js\trans\logger.js
+把里面的内容都删掉，但保留这个空文件
+貌似就是这两个步骤，博主应该没漏掉
+
+修改印象笔记图标
+博主用的是主题1（明显比主题0好看啊，主题0还没印象笔记图标），
+
+但是由于下面那个更多用的是主题0的图片，会造成加载两个图片，让我微微不爽（同样的没有印象笔记图标！）
+
+于是修改如下：
+
+static\api\css\share_popup.css
+最后加上 .popup_evernotecn{background-position:4px -3190px;}
+static\api\css\share_style0_16.css
+最后加上 .bds_evernotecn{background-position:0 -3195px}
+把 icons_1_16.png 重命名为 icons_0_16.png
+可选：用tinypng 把图片压缩下，博主现在这个图片就7.81KB
+微信URL过长失败二维码出不来的问题
+原因：网址过长时调用dwz API，而该网站不支持HTTPS
+
+修复方式有两种
+
+允许长的网址
+自己寻找可以缩短网址的API，进行替换
+本文采用的是第一种，在trans_weixin.js 修改d函数即可
+d = function () {
+		s.attr("data-url") != r && (u.html("\u6b63\u5728\u52a0\u8f7d"), r.length > 200 ? 
+		/*p(r, function (e) {
+				h(e, !0)
+			}) */
+		 h(r):
+		 h(r))
+	},

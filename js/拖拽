@@ -1,0 +1,35 @@
+var test,mouseX,mouseY,objX,objY;
+var drag = false;
+window.onload = function(){
+  var test = document.getElementById("test");//获取拖拽元素
+  test.onmousedown = down;
+  test.onmousemove = move;
+  document.onmouseup = up;//绑定事件
+  test.style.position = "relative";
+  test.style.top = "0px";
+  test.style.left = "0px";
+}
+
+function down(event){
+   event = event || window.event;
+   drag = true;
+   mouseX = parseInt(event.clientX);//获取鼠标的X值
+   mouseY = parseInt(event.clientY);//获取鼠标的Y值
+   objX = parseInt(test.style.left);//获取元素X值
+   objY = parseInt(test.style.top);//获取元素Y值
+}
+
+function move(event){
+  event = event || window.event;
+  if(drag){
+    var x,y;
+    x = objX + event.clientX - mouseX;//计算元素X值
+    y = objY + event.clientY - mouseY;//计算元素Y值
+    test.style.left = x + "px";
+    test.style.top = y + "px";
+  }
+}
+
+function up(){
+  drag = false;
+}

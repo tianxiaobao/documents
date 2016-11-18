@@ -1,0 +1,24 @@
+1.安装git
+2.建立本地仓库，clone代码
+  a.用git bash进入到该目录 
+  b.执行git init 初始化本地仓库
+  c.配置git
+  git config --global user.name "你的名字"         git config --global user.email johndoe@example.com  //你的邮箱
+  d.执行：git clone git@192.168.101.153:/alidata/git/hangjialicai
+3.安装后台php环境，下载xampp，配置响应的vhosts  
+ a.在D:\XAMPP\apache\conf\extra中打开httpd-vhosts.conf文件
+  <VirtualHost *:80>
+    DocumentRoot D:/haitao
+    ServerName haitao.com
+    ServerAlias www.haitao.com
+    <Directory "D:/haitao">
+      Options Indexes FollowSymLinks
+      AllowOverride all
+      Order allow,deny
+      Allow from all
+      Require all granted
+    </Directory>
+  </VirtualHost>
+  b.更改C:\Windows\System32\drivers\etc的hosts文件  添加：
+    127.0.0.1   www.mayi.com
+    127.0.0.1   mayi.com

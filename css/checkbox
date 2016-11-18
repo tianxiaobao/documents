@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>checkbox</title>
+<style type="text/css">
+.chk_1,.chk_2,.chk_3,.chk_4 {
+    display: none;
+}
+ 
+/*******STYLE 1*******/
+.chk_1 + label {
+    background-color: #FFF;
+    border: 1px solid #C1CACA;
+    padding: 6px;
+    display: inline-block;
+    position: relative;
+}
+.chk_1:checked + label {
+    background-color: #ECF2F7;
+    border: 1px solid #92A1AC;
+    color: #243441;
+}
+.chk_1:checked + label::after {
+    content: "✔";
+    position: absolute;
+    top: -3px;
+    left: 0px;
+    color: rgb(117, 135, 148);
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+}
+</style>
+</head>
+<body>
+	<input type="checkbox" id="checkAll" class="chk_1"/><label for="checkAll"></label>
+	<input type="checkbox" name="subBox" id="checkbox_a2" class="chk_1"/><label for="checkbox_a2"></label>
+	<input type="checkbox" name="subBox" id="checkbox_a3" class="chk_1"/><label for="checkbox_a3"></label>
+</body>
+<script src="http://code.jquery.com/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+    $("#checkAll").click(function() {
+        $('input[name="subBox"]').attr("checked",this.checked);
+    });
+    var $subBox = $("input[name='subBox']");
+    $subBox.click(function(){
+        $("#checkAll").attr("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
+    });
+});
+</script>
+</html>

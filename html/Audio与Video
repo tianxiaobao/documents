@@ -1,0 +1,45 @@
+一、Audio音频
+<audio src="music.mp3"></audio>
+属性      值            描述
+autoplay	autoplay	    如果出现该属性，则音频在就绪后马上播放。
+controls	controls	    如果出现该属性，则向用户显示控件，比如播放按钮。
+loop	    loop	        如果出现该属性，则每当音频结束时重新开始播放。
+preload	  preload	      如果出现该属性，则音频在页面加载时进行加载，并预备播放。如果使用 "autoplay"，则忽略该属性。
+src	      url	          要播放的音频的 URL。
+1、可以通过new创建对象
+var media = new Audio('muisic.mp3');
+2、赋值
+media.controls = "true"
+media.autoplay = "true"
+3、错误状态 media.error; //null  正常
+4、media.error.code;   //1.用户终止 2.网络错误 3.解码错误 4.URL无效
+5、media.src与media.currentSrc //返回当前资源的URL
+6、media.src = 'music.mp3' 设置当前资源的URL
+7、media.canPlayType(type); //是否能播放某种格式的资源
+8、media.networkState; //0.此元素未初始化 1.正常但没有使用网络 2.正在下载数据 3.没有找到资源
+9、media.load(); //重新加载src指定的资源
+10、media.buffered; //返回已缓冲区域，TimeRanges
+11、media.preload; //none:不预载; metadata:页面加载后仅加载音频的元数据;auto:一旦页面加载，则开始加载音频。
+12、media.duration; //当前资源长度 时间长度
+13、media.currentTime = value; //当前播放的位置，赋值可改变位置
+14、media.paused;//是否暂停，返回true或false
+15、media.playbackRate = 1;//当前播放速度，设置后马上改变，正常值为1，小于0.5时出现无声
+16、media.ended; //是否结束
+17、media.autoPlay; //是否自动播放，false或true
+18、media.loop; //是否循环播放
+19、media.play(); //播放
+20、media.pause(); //暂停
+21、media.volume = 1; //音量，值为0-1
+22、media.muted = true; //静音，值为true或false
+23、source元素可以链接不同的音频文件，浏览器将使用第一个可识别的格式：如下面：
+<audio controls="controls"><source src="music.ogg" /><source src="music.mp3" /><source src="music.wav" /></audio> 
+
+二、Video视频
+属性	      值	        描述
+autoplay	  autoplay	  如果出现该属性，则视频在就绪后马上播放。
+controls	  controls	  如果出现该属性，则向用户显示控件，比如播放按钮。
+height	    pixels	    设置视频播放器的高度。
+loop	      loop	      如果出现该属性，则当媒介文件完成播放后再次开始播放。
+preload   	preload	    如果出现该属性，则视频在页面加载时进行加载，并预备播放。如果使用 "autoplay"，则忽略该属性。
+src	        url	        要播放的视频的 URL。
+width     	pixels     	设置视频播放器的宽度。

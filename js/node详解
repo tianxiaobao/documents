@@ -1,0 +1,267 @@
+一、Node.js出现原因与优点
+传统的服务器语言，如php，java等，每个web请求连接都会产生一个线程，假设每个线程需要配置2M的配置内存。因此，一个8G的服务器主机，
+也只能承受来自4000个并发用户的请求。当服务器承受不了这么多的用户时，就需要增加服务器，从而导致增加项目运营成本。
+
+Node.js解决多请求的方法，在于其处理连接服务器的方式。在Node.js中每个http链接都会发射一个在Node.js引擎的进程中运行的事件。而不是为每个连接
+生成一个新的OS进程（并为其分配一些配套内容）。Node.js相对php来说优点在于处理高并发请求，并且由于Node.js是事件驱动，因此更好地节约服务器内存资源。
+简单的说，Node.js 就是运行在服务端的 JavaScript。是一个基于Chrome JavaScript 运行时建立的一个平台。是一个事件驱动I/O服务端JavaScript环境，
+基于Google的V8引擎，V8引擎执行Javascript的速度非常快，性能非常好。
+
+二、一个nodeJS实例，建立server.js文件
+var http = require('http');//引入 required 模块
+http.createServer(function (request, response) { //http.createServer() 方法创建服务器
+  response.writeHead(200, {'Content-Type': 'text/plain'});// 发送 HTTP 头部,HTTP 状态值: 200 : OK,内容类型: text/plain
+  response.end('Hello World\n');// 发送响应数据 "Hello World"
+}).listen(8888,"127.0.0.1"); //使用 listen 方法绑定 8888 端口,第二个参数可缺省，默认值为127.0.0.1。
+console.log('Server running at http://127.0.0.1:8888/');// 终端打印如下信息
+
+打开终端到server.js文件目录，输入node server.js命令执行以上的代码
+接下来，打开浏览器访问 http://127.0.0.1:8888/，你会看到一个写着 "Hello World"的网页。
+分析Node.js 的 HTTP 服务器：
+第一行请求（require）Node.js 自带的 http 模块，并且把它赋值给 http 变量。
+接下来我们调用 http 模块提供的函数： createServer 。这个函数会返回 一个对象，这个对象有一个叫做 listen 的方法，这个方法有一个数值参数， 指定这个 HTTP 服务器监听的端口号。
+
+三、Node.js REPL（交互式解释器）
+1、启动 Node 的终端：
+$ node
+> 
+
+2、简单的表达式运算
+> 1 +4
+5
+
+3、使用变量
+> x = 10
+10
+> var y = 10
+undefined
+> x + y
+20
+
+4、多行表达式
+> do {
+... x++;
+... console.log("x: " + x);
+... } while ( x < 5 );
+x: 1
+x: 2
+x: 3
+x: 4
+x: 5
+undefined
+>
+... 三个点的符号是系统自动生成的，你回车换行后即可。Node 会自动检测是否为连续的表达式。
+
+5、REPL 命令
+ctrl + c - 退出当前终端。
+ctrl + c 按下两次 - 退出 Node REPL。
+ctrl + d - 退出 Node REPL.
+向上/向下 键 - 查看输入的历史命令
+tab 键 - 列出当前命令
+.help - 列出使用命令
+.break - 退出多行表达式
+.clear - 退出多行表达式
+.save filename - 保存当前的 Node REPL 会话到指定文件
+.load filename - 载入当前 Node REPL 会话的文件内容。
+
+四、Node.js回调
+1、阻塞代码
+var fs = require("fs");
+var data = fs.readFileSync('input.txt');
+console.log(data.toString());
+console.log("程序执行结束!");
+
+2、非阻塞代码
+var fs = require("fs");
+fs.readFile('input.txt', function (err, data) {
+    if (err) return console.error(err);
+    console.log(data.toString());
+});
+console.log("程序执行结束!");
+第一个实例在文件读取完后才执行完程序。 第二个实例我们呢不需要等待文件读取完，这样就可以在读取文件时同时执行接下来的代码，大大提高了程序的性能。
+
+五、Node.js事件驱动
+Node.js 有多个内置的事件，我们可以通过引入 events 模块，并通过实例化 EventEmitter 类来绑定和监听事件
+实例：
+// 引入 events 模块
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
+// 创建事件处理程序
+var connectHandler = function connected() {
+   console.log('连接成功。');
+   // 触发 data_received 事件 
+   eventEmitter.emit('data_received');
+}
+// 绑定 connection 事件处理程序
+eventEmitter.on('connection', connectHandler);
+// 使用匿名函数绑定 data_received 事件
+eventEmitter.on('data_received', function(){
+   console.log('数据接收成功。');
+});
+// 触发 connection 事件 
+eventEmitter.emit('connection');
+console.log("程序执行完毕。");
+
+六、Node.js EventEmitter
+events 模块只提供了一个对象： events.EventEmitter
+// 引入 events 模块
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
+EventEmitter的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter支持 若干个事件监听器。
+//event.js 文件
+var events = require('events'); 
+var emitter = new events.EventEmitter(); 
+emitter.on('someEvent', function(arg1, arg2) { 
+	console.log('listener1', arg1, arg2); 
+}); 
+emitter.on('someEvent', function(arg1, arg2) { 
+	console.log('listener2', arg1, arg2); 
+}); 
+emitter.emit('someEvent', 'arg1 参数', 'arg2 参数'); 
+on 函数用于绑定事件函数，emit 属性用于触发一个事件
+1	addListener(event, listener)
+为指定事件添加一个监听器到监听器数组的尾部。
+2	on(event, listener)
+为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数。
+server.on('connection', function (stream) {
+  console.log('someone connected!');
+});
+3	once(event, listener)
+为指定事件注册一个单次监听器，即 监听器最多只会触发一次，触发后立刻解除该监听器。
+server.once('connection', function (stream) {
+  console.log('Ah, we have our first user!');
+});
+4	removeListener(event, listener)
+移除指定事件的某个监听器，监听器 必须是该事件已经注册过的监听器。
+var callback = function(stream) {
+  console.log('someone connected!');
+};
+server.on('connection', callback);
+// ...
+server.removeListener('connection', callback);
+5	removeAllListeners([event])
+移除所有事件的所有监听器， 如果指定事件，则移除指定事件的所有监听器。
+6	setMaxListeners(n)
+默认情况下， EventEmitters 如果你添加的监听器超过 10 个就会输出警告信息。 setMaxListeners 函数用于提高监听器的默认限制的数量。
+7	listeners(event)
+返回指定事件的监听器数组。
+8	emit(event, [arg1], [arg2], [...])
+按参数的顺序执行每个监听器，如果事件有注册监听返回 true，否则返回 false。
+
+七、Node.js Buffer(缓冲区)，该类用来创建一个专门存放二进制数据的缓存区
+1、写入缓存区
+buf = new Buffer(256);
+len = buf.write("www.runoob.com");
+console.log("写入字节数 : "+  len);
+2、从缓冲区读取数据
+buf.toString(encoding, start, end)
+console.log( buf.toString('ascii',0,5));
+3、将 Buffer 转换为 JSON 对象
+var buf = new Buffer('www.runoob.com');
+var json = buf.toJSON(buf);
+4、缓冲区合并
+var buffer1 = new Buffer('菜鸟教程 ');
+var buffer2 = new Buffer('www.runoob.com');
+var buffer3 = Buffer.concat([buffer1,buffer2]);
+5、缓冲区比较
+var buffer1 = new Buffer('ABC');
+var buffer2 = new Buffer('ABCD');
+var result = buffer1.compare(buffer2);
+6、拷贝缓冲区
+var buffer1 = new Buffer('ABC');
+// 拷贝一个缓冲区
+var buffer2 = new Buffer(3);
+buffer1.copy(buffer2);
+7、缓冲区裁剪
+var buffer1 = new Buffer('runoob');
+// 剪切缓冲区
+var buffer2 = buffer1.slice(0,2);
+8、缓冲区长度
+var buffer = new Buffer('www.runoob.com');
+//  缓冲区长度
+console.log("buffer length: " + buffer.length);
+
+八、Node.js Stream(流)
+1、从流中读取数据
+var fs = require("fs");
+var data = '';
+
+// 创建可读流
+var readerStream = fs.createReadStream('input.txt');
+
+// 设置编码为 utf8。
+readerStream.setEncoding('UTF8');
+
+// 处理流事件 --> data, end, and error
+readerStream.on('data', function(chunk) {
+   data += chunk;
+});
+
+readerStream.on('end',function(){
+   console.log(data);
+});
+
+readerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log("程序执行完毕");
+2、写入流
+var fs = require("fs");
+var data = '菜鸟教程官网地址：www.runoob.com';
+
+// 创建一个可以写入的流，写入到文件 output.txt 中
+var writerStream = fs.createWriteStream('output.txt');
+
+// 使用 utf8 编码写入数据
+writerStream.write(data,'UTF8');
+
+// 标记文件末尾
+writerStream.end();
+
+// 处理流事件 --> data, end, and error
+writerStream.on('finish', function() {
+    console.log("写入完成。");
+});
+
+writerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log("程序执行完毕");
+3、管道流
+var fs = require("fs");
+
+// 创建一个可读流
+var readerStream = fs.createReadStream('input.txt');
+
+// 创建一个可写流
+var writerStream = fs.createWriteStream('output.txt');
+
+// 管道读写操作
+// 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中
+readerStream.pipe(writerStream);
+
+console.log("程序执行完毕");
+4、链式流
+链式流一般用于管道操作，用管道和链式来压缩和解压文件
+var fs = require("fs");
+var zlib = require('zlib');
+
+// 压缩 input.txt 文件为 input.txt.gz
+fs.createReadStream('input.txt')
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream('input.txt.gz'));
+  
+console.log("文件压缩完成。");
+
+var fs = require("fs");
+var zlib = require('zlib');
+// 解压 input.txt.gz 文件为 input.txt
+fs.createReadStream('input.txt.gz')
+  .pipe(zlib.createGunzip())
+  .pipe(fs.createWriteStream('input.txt'));
+  
+console.log("文件解压完成。");

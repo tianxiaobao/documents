@@ -1,0 +1,103 @@
+js里的事件流
+事件流的三个阶段：捕获阶段、目标阶段、冒泡阶段，低版本IE（IE8及以下版本）不支持捕获阶段
+捕获事件流：Netscape提出的事件流，即事件由页面元素接收，逐级向下，传播到最具体的元素。
+冒泡事件流：IE提出的事件流，即事件由最具体的元素接收，逐级向上，传播到页面。
+
+IE和W3C不同绑定事件解绑事件的方法有什么区别，参数分别是什么，以及事件对象e有什么区别？
+1.绑定事件：
+W3C：target.addEventListener(event, listener, useCapture);
+event —— 事件类型；listener —— 事件触发时执行的函数；useCapture —— 指定事件是否在捕获或冒泡阶段执行，为true时事件句柄在捕获阶段执行，为false（默认false）时，事件句柄在冒泡阶段执行。
+btn.addEventListener('click',function(){
+//do something...
+},false)
+对应的事件移除：removeEventListener(event,function,capture/bubble);
+
+IE：target.attachEvent(type, listener);
+type - 字符串，事件名称，含“on”，比如“onclick”、“onmouseover”、“onkeydown”等。 listener —— 实现了 EventListener 接口或者是 JavaScript 中的函数。
+btn.attachEvent('onclick',function(){
+//do something...
+})
+对应的事件移除：detachEvent(event,function);
+Q:事件的委托（代理 Delegated Events）的原理以及优缺点?
+A：委托（代理）事件是那些被绑定到父级元素的事件，但是只有当满足一定匹配条件时才会被挪。这是靠事件的冒泡机制来实现的，
+优点是：
+（1）可以大量节省内存占用，减少事件注册，比如在table上代理所有td的click事件就非常棒 
+（2）可以实现当新增子对象时无需再次对其绑定事件，对于动态内容部分尤为合适
+缺点是：
+事件代理的应用常用应该仅限于上述需求下，如果把所有事件都用代理就可能会出现事件误判，即本不应用触发事件的被绑上了事件。
+Q：手写原生js实现事件代理，并要求兼容浏览器
+// ============ 简单的事件委托
+function delegateEvent(interfaceEle, selector, type, fn) {
+    if(interfaceEle.addEventListener){
+    interfaceEle.addEventListener(type, eventfn);
+    }else{
+    interfaceEle.attachEvent("on"+type, eventfn);
+    }
+     
+    function eventfn(e){
+    var e = e || window.event;    
+    var target = e.target || e.srcElement;
+    if (matchSelector(target, selector)) {
+            if(fn) {
+                fn.call(target, e);
+            }
+        }
+    }
+}
+/**
+ * only support #id, tagName, .className
+ * and it's simple single, no combination
+ */
+function matchSelector(ele, selector) {
+    // if use id
+    if (selector.charAt(0) === "#") {
+        return ele.id === selector.slice(1);
+    }
+    // if use class
+    if (selector.charAt(0) === ".") {
+        return (" " + ele.className + " ").indexOf(" " + selector.slice(1) + " ") != -1;
+    }
+    // if use tagName
+    return ele.tagName.toLowerCase() === selector.toLowerCase();
+}
+//调用
+var odiv = document.getElementById("oDiv");
+delegateEvent(odiv,"a","click",function(){
+    alert("1");
+})
+
+
+事件委托
+一般情况循环绑定
+window.onload = function(){
+    var oUl = document.getElementsByTagName('ul')[0];
+    var aLi = document.getElementsByTagName('li');
+    var len = aLi.length;
+    for(var i=0;i<len;i++){
+        aLi[i].onmouseover = function(){
+            this.style.background = 'red';
+        }
+        aLi[i].onmouseout = function(){
+            this.style.background = '';
+        }
+    }
+}
+利用事件委托，将事件绑定到父元素上
+window.onload = function(){
+ var oUl = document.getElementsByTagName('ul')[0];
+ var aLi = document.getElementsByTagName('li');
+  oUl.onmouseover = function(ev){
+    var ev = ev || window.event;
+    var target = ev.target || ev.srcElement;
+    if(target.nodeName.toLowerCase() == 'li'){
+      target.style.background = 'red';
+    }
+  };
+  oUl.onmouseout =function(ev){
+    var ev = ev || window.event;
+    var target =ev.target || ev.srcElement;
+    if(target.nodeName.toLowerCase() == 'li'){
+      target.style.background = '';
+    }
+  };
+}

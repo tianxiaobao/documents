@@ -1,0 +1,14 @@
+利用hash表实现去重，效率比数组的indexof要好
+var arr = [2,1,3,2,4,5,3];
+function unique(arr){
+  var obj ={}, r=[];
+  for(var i = 0; i < arr.length; i++) //遍历当前数组
+	{
+		if (!obj[arr[i]]) //如果hash表中没有当前项
+		{
+			obj[arr[i]] = true; //存入hash表
+			r.push(arr[i]); //把当前数组的当前项push到临时数组里面
+		}
+	}
+	return r;
+}

@@ -1,0 +1,47 @@
+以下代码判断浏览器种类和版本，目的是为了当浏览器为IE7及以下时方便做出相应的处理
+function getExplorerInfo() {
+  var explorer = window.navigator.userAgent.toLowerCase() ;
+  //ie 
+  if (explorer.indexOf("msie") >= 0) {
+    var ver=explorer.match(/msie ([\d.]+)/)[1];
+    return {type:"IE",version:ver};
+  }
+  //firefox 
+  else if (explorer.indexOf("firefox") >= 0) {
+    var ver=explorer.match(/firefox\/([\d.]+)/)[1];
+    return {type:"Firefox",version:ver};
+  }
+  //Chrome
+  else if(explorer.indexOf("chrome") >= 0){
+    var ver=explorer.match(/chrome\/([\d.]+)/)[1];
+    return {type:"Chrome",version:ver};
+  }
+  //Opera
+  else if(explorer.indexOf("opera") >= 0){
+    var ver=explorer.match(/opera.([\d.]+)/)[1];
+    return {type:"Opera",version:ver};
+  }
+  //Safari
+  else if(explorer.indexOf("Safari") >= 0){
+    var ver=explorer.match(/version\/([\d.]+)/)[1];
+    return {type:"Safari",version:ver};
+  }
+}
+alert("type:"+getExplorerInfo().type+"\nversion:"+getExplorerInfo().version);
+
+
+还有一种直接判断为IE6或IE7版本进行处理
+$(document).ready(function() {
+  var b_name = navigator.appName; 
+  var b_version = navigator.appVersion; 
+  var version = b_version.split(";"); 
+  var trim_version = version[1].replace(/[ ]/g, ""); 
+  if (b_name == "Microsoft Internet Explorer") { 
+    /*如果是IE6或者IE7*/ 
+    if (trim_version == "MSIE7.0" || trim_version == "MSIE6.0") { 
+      alert("IE浏览器版本过低，请到指定网站去下载相关版本"); 
+      //点击确定后跳转到其他网页
+      window.location.href="http://jiaoxueyun.com/download.jsp"; 
+    } 
+  } 
+});

@@ -1,0 +1,13 @@
+图片加载失败之后显示默认图片
+1、利用img的onerror属性，代码：
+<img src="image/showimg.jpg" onerror="this.onerror=null;this.src='http://pic250.quanjing.com/imageclk005/ic01430270.jpg'"/>
+2、利用jquery.error
+$("img").error(function(){
+  $(this).attr("src","default.jpg");
+});
+
+假如默认图片也加载失败，则上面两个变成了死循环，此时可以使用one()函数
+$("img").one("error",function(e){
+  $(this).attr("src","default.jpg");
+});
+另外error事件不支持冒泡，jquery.delegate函数捕获不到error事件

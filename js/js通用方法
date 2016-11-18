@@ -1,0 +1,87 @@
+一、编写一个JavaScript函数 parseQueryString，把URL参数解析为一个对象
+var url="http://www.taobao.com/index.php?key0=0&key1=1&key2=2";
+function parseQueryString(url){
+  var str=url.split("?")[1];
+  var items=str.split("&");
+  var result={};
+  var arr;
+  for(var i=0; i<items.length; i++){
+    arr=items[i].split('=');
+    result[arr[0]]=arr[1];
+  }
+  return result;
+}
+var obj=parseQueryString(url);
+console.log(obj);
+二、判断图片是否加载完
+function loadImage1(url,callback){
+  var img = new Image();
+  img.onload = function(){
+        //图片加载完成后执行的操作
+  }
+  img.src = url;
+}
+三、图片按某个尺寸等比缩放
+function img1(picW,picH,maxWidth,maxHeight){
+   var Ratio,
+       wRatio = maxWidth / picW,
+       hRatio = maxHeight / picH;
+   if(wRatio < 1 || hRatio < 1){
+     Ratio = Math.min(wRatio, hRatio);
+     picW = picW * Ratio;
+     picH = picH * Ratio;
+   }
+ }
+四、addEventListener的兼容写法
+function addEventListener(dom, type, fn) {
+  if (dom.addEventListener){
+    dom.addEventListener(type, fn, false);
+  }
+  else if (dom.attachEvent) {
+    dom.attachEvent( "on"+type, fn);
+  }
+};
+五、回到顶部按钮
+利用jQuery里的animate和scrollTop方法，便不需要使用插件创建简单的滚动到顶部动画
+$('.top').click(function(e){
+  e.preventDefault();
+  $('html, body').animate({scrollTop: 0}, 800);
+});
+六、禁止输入
+$('input[type="submit"]').prop('disabled', true);
+$('input[type="submit"]').prop('disabled', false);
+七、js实现星期几
+var str = "今天是星期" + "日一二三四五六".charAt(new Date().getDay());
+八、JS刷新页面后滚动条的位置不变
+最好的办法就是 在JS中用cookie记录下当前滚动条的位置，然后刷新时读取cookie就可以实现这个功能了
+<script type="text/javascript">
+function  Trim(strValue)     
+{     
+return   strValue.replace(/^s*|s*$/g,"");     
+}
+function SetCookie(sName,sValue)     
+{     
+document.cookie = sName + "=" + escape(sValue);     
+}   
+function GetCookie(sName)     
+{     
+  var aCookie = document.cookie.split(";");     
+  for(var　i=0;　i　< aCookie.length;　i++)     
+  {     
+    var aCrumb = aCookie[i].split("=");     
+    if(sName　== Trim(aCrumb[0]))     
+    {     
+      return unescape(aCrumb[1]);     
+    }     
+  }     
+  return null;     
+} 
+function scrollback()     
+{     
+  if(GetCookie("scroll")!=null){document.body.scrollTop=GetCookie("scroll")}     
+}     
+</script>
+然后在html页面中设置<body id=body onscroll=SetCookie("scroll",body.scrollTop);  onload="scrollback();">就可以在刷新或提交后滚动条的位置保持不变了
+
+九、改变浏览器标题
+document.title="";

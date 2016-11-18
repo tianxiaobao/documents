@@ -1,0 +1,62 @@
+1.给基本类型数据添加属性，不报错，但取值时是undefined
+a = 3;
+a.prop = 4;  undefined
+alert(a + a.prop); 
+输出结果：NAN
+
+2.给字符串添加属性
+str = 'a';
+str.prop = 'b'; undefined
+alert(str + str.prop); 
+输出结果：aundefined
+
+3.隐式的全局变量
+var a = 1;
+function func() {
+    a = b = 2;
+}
+func();
+alert(a); 
+alert(b); 
+输出结果：2 2
+JS中不用var声明的变量默认是全局变量，而这里的连等使的情况更加隐蔽。这里的b是全局的
+
+4.变量声明早于代码运行
+var uname = 'jack';
+function change() {
+    alert(uname);  
+    var uname = 'lily';
+    alert(uname);  
+}
+change();
+输出结果：undefined lily
+
+5.函数声明早于变量声明
+function change() {
+    alert(typeof fn);
+    function fn() {
+        alert('hello');
+    }
+    var fn;
+}
+change(); 
+输出结果：function
+
+5.alert中换行用 \n
+alert("1\n2");
+
+6.求一个字符串的字节长度 
+new function(s)
+{
+if(!arguments.length||!s) return null;
+if(""==s) return 0;
+var l=0;
+for(var i=0;i<s.length;i++)
+{
+   if(s.charCodeAt(i)>255) l+=2;
+   else l++;
+}
+alert(l);
+}("hello 田先生");
+输出结果：12
+注：Unicode 编码中大于255的算2个字节，arguments.length为参数长度

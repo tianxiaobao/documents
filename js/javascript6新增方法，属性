@@ -1,0 +1,60 @@
+1、模板文本
+需要在字符串中加入变量时，通常做法就是使用字符串拼接，如
+var param = 'b';
+var str = 'a ' + param + ' c';
+ES6中简单了，可以直接在字符串中添加变量
+var str = `a ${param} c`;
+注意，使用的是反引号 “，而不是 ”
+
+2、多行字符串
+例如想定义一个html代码片段，放在一行很难看，想用多行，还得用字符串拼接
+var html =
+'<div>' +
+'<span>test</span>' +
+'</div>';
+一堆加号和引号，很麻烦
+ES6中的反引号就能简单的解决
+var html =
+`<div>
+<span>test</span>
+</div>`;
+非常清晰，里面还可以直接加变量，很方便
+
+3、参数默认值
+想给参数设置默认值时，需要我们手工处理，例如
+function (width, height) {
+var height = height || 300;
+var width = width || 600;
+
+
+...
+}
+ES6可以直接指定默认值
+
+function (width=600, height=300) {
+...
+}
+4、解构赋值
+例如有一个json对象
+var data = {name:'dys', age:1};
+想取得name,age属性的话，需要分别获取
+var name = data.name;
+var age = data.age;
+ES6可以自动获取并赋值
+var {name, age} = data;
+
+数组方法
+一、forEach遍历
+[1,2,3,4].forEach(value,index,array){
+}
+
+二、map，[].map(); 基本用法跟forEach方法类似
+[].map(function(value, index, array) {
+    // ...
+});
+
+三、filter返回过滤后的新数组
+var data = [0, 1, 2, 3];
+var arrayFilter = data.filter(function(item) {
+    return item;
+});

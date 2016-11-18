@@ -1,0 +1,71 @@
+一、IE6双倍边距bug及解决办法
+例子：
+.floatbox{
+width:200px;
+height:200px;
+float:left;
+margin-left:10px;
+}
+<div class="floatbox">FLOAT</div>
+很简单对吧？但在IE6中查看时，会发现左侧外边距10px被扩大到了20px;
+解决办法：在该元素上加入display:inline;
+
+二：IE6中3像素问题及解决办法
+例子：
+.slide{width:200px;height:200px;float:left;background: #f00;}
+.main{width:200px;height:200px;background: #0f0;display:inline-block;}
+<div class="slide"></div>
+<div class="main"></div>
+当浮动元素与非浮动元素相邻时，这个3px的bug就会出现
+解决办法：在slide上添加_margin-right:-3px;前面添加横线，专门针对IE6生效，但他不能通过w3c验证。
+最好办法：把main也设置浮动。
+
+三、IE6下空元素的高度bug
+如果一个元素中没有任何内容，当在样式中为这个元素设置了0-19px之间的高度时。此元素的高度始终为19px。
+例子：
+.eg{height:10px;}
+<div class="eg"></div>
+解决办法：
+1.css里添加overflow:hidden
+2.div里添加注释
+3.css里添加line-height:0;然后div里加上&nbsp;
+注：加overflow属性后该空标签的块元素能通过设置height属性来控制元素的高度，但会导致ie6,ie7浏览器下，该元素的背景图显示不全，解决办法_font-size:0;
+
+四、IE6中奇数宽高的BUG
+例子：
+#out {
+width: 399px;/*这里宽度为奇数，bug就出现了！！改成偶数就OK了*/height: 400px;position: relative;background:#0f0;}
+#inn {width: 200px;height: 200px;position: absolute;top: 0px;right: 0px;background:#f00;}
+<div id="out">
+<div id="inn">内部绝对定位的DIV</div>
+</div>
+内部定位元素与外部元素之间存在1px的距离
+解决办法：将外部相对定位的div宽度改成偶数
+
+五、IE6中li插入图片后下方有空隙bug
+例子：
+ul{width:774px;overflow:hidden;margin:0 auto;} 
+li{float:left;width:248px;height:162px;display:inline;margin:0 10px 10px 0;background:red;}
+<ul> 
+  <li><img src="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg" width="248" height="162" alt=""/></li> 
+  <li><img src="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg" width="248" height="162" alt=""/></li> 
+  <li><img src="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg" width="248" height="162" alt=""/></li> 
+  <li><img src="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg" width="248" height="162" alt=""/></li> 
+  <li><img src="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg" width="248" height="162" alt=""/></li> 
+</ul> 
+解决办法：
+1.给 li 加上 overflow:hidden; 
+2.给 ul 加上 font-size:0; 
+3.设置 img 的 display 值为 block。 
+4.设置 img 的 vertical-align 的值为 top/middle/bottom。
+
+六、IE6中z-index失效
+例子：
+<div id="blank"></div>
+<div style="position:relative; z-index:9999;">
+  <img style="float:left;"src="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg" />
+</div>
+解决方法：
+1、position:relative改为position:absolute;
+2、浮动元素添加position属性（如relative，absolute等）;
+3、去除浮动。

@@ -1,0 +1,22 @@
+关于html与body的一些表现
+1.背景色
+一般情况下，我们css控制的最高结点就是body，例如设置：body{background:#f00;}则浏览器界面就是完全的#f00的背景色。看上去是body标签下的背景色起作用了，然而却是body作为一个根结点起作用了，html标签未被激活，body担当类似于根结点的结点，其background背景色被浏览器俘获，浏览器界面背景色为background的背景色。
+body{background:#f00; margin:100px; border:30px solid #0f0;}
+意思很简明：外边距100像素，边框30像素，背景色#f00，按照对一般标签的理解，100像素的外边距应该不含有背景色的
+一旦设置了html节点的background背景色之后，body的背景色将失效
+html{background:#999;}
+body{background:#f00; margin:100px; border:30px solid #0f0;}
+2.关于滚动条
+打开一个空白页面，观察浏览器右侧，会发现IE浏览器会有一段滚动条的槽道，而Firefox浏览器下没有
+Firefox下没有滚动条，有时候会产生体验上的一些问题，比如：假设一个页面高度有限，无滚动条，当鼠标移到一个元素上，要显示一个浮动层，但是这个浮动层有一定的高度，加上鼠标位置偏低，一旦浮动层出现，说不定页面的高度被撑高并出现滚动条，这是在Firefox浏览器下就会产生页面的晃动，原因是滚动条的出现导致页面的宽度减小，布局发生一些偏移，而这种便宜造成的体验是不好的。如何避免呢？很多人会想到设置body{overflow-y:scroll;}Firefox下是出现了滚动槽了，但是IE下出现了两个滚动条
+为什么IE会产生双固定条，里面那一个肯定是body的，外面的那一个是html标签的，就是说默认状态下，IE6下html有个overflow:scroll;属性，证明很简单，您设置html标签overflow:hidden;看滚动条是否没有了。所以呢，只要在css中些写上：
+html{overflow-y:scroll;}
+就可以让IE和Firefox（包括chrome）浏览器默认产生滚动条的滚动槽了
+3.关于height 100%
+默认状态下，body不是高度100%显示的
+那么body是否支持height:100%;呢？经过我的测试，IE6支持，Firefox浏览器不支持。
+要想让Firefox浏览器也支持body的height:100%;是简单的，就是设置html标签height:100%;一旦设置了height:100%;则无论哪个浏览器下body都支持height:100%;了，而body内部的容器也可以支持height:100%;了。
+4.关于html，body的css hack
+* html body 经典的IE6 css hack
+*+html，html > body  只有IE7认得它
+body:nth-of-type(1)是针对chrome浏览器的hack，意思是说某某标签的第一个元素，因为一个页面就只有一个body标签，所以这个肯定会成立的

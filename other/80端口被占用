@@ -1,0 +1,5 @@
+解决80端口被占用无法启动Apache问题
+1、打开命令行 cmd
+2、输入netstat -ano  查看到80端口被那个服务站用Pid
+3、tasklist|findstr "2016"找到占用此pid的进程
+4、杀掉这个进程。

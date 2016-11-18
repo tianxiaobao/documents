@@ -1,0 +1,22 @@
+如果你想定位一个背景图片，让它距离左边20px，距离顶部10px，这用CSS很容易实现。你的做法就是background-position: 20px 10px;。
+但是，如果你想定位的位置是距离右边20px，距离底部10px，那该怎么办？
+我们还假设了一种情况，就是我们不知道这样元素或页面的宽度和高度，通常，流式布局页面和动态内容页面都是这种情况。在这种情况下，
+如果要实现上面描述的需求，我们需要运用一些数学技巧来计算背景图片的偏移量，但仍然是使用background-position语法。
+解决方法：
+一、使用background-position的四个值语法
+background-position: right 20px bottom 10px;
+这样，你就指定了距离右边20px，底部10px;
+至于浏览器支持情况, 根据MDN：Chrome 25+, Firefox 13+, IE 9+, Opera 10.5+, Safari/iOS 7+。最大的问题是安卓。我测试过 Android 4.0, 4.1 和 4.2，都不行。 Android 4.4 没问题。
+二、使用 calc()
+如果坚持使用2个值的background-position语法，我们需要使用calc()。比如：
+background-position: calc(100% - 20px) calc(100% - 10px);
+这种写法的浏览器支持情况稍微好一些，谷歌浏览器19+, Firefox 4+ 和 Safari 6+ (全部需要使用浏览器引擎前缀)。
+三、使用JavaScript
+如果你希望能够兼容所有浏览器，我估计这最后的方法就是使用JavaScript了。获取元素的高度和宽度，获取背景图片的尺寸，然后用CSS调整。
+使用jQuery:
+var el = $(".example"),
+    bgWidth = 20,
+    bgHeight = 20;
+el.css({
+  "background-position": (el.width()-bgWidth+10) + "px " + (el.height()-bgHeight-10) +  "px"
+});

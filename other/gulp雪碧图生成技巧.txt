@@ -1,0 +1,21 @@
+﻿技巧 ：
+gulp-css-spriter默认会对样式文件里，所有的background/background-image的图片合并，
+但实际项目中，我们不是所有的图片都需要合并。
+background-image: url(../slice/p1-3.png?__spriter);//有?__spriter后缀的合并
+background-image: url(../slice/p-cao1.png); //不合并 
+修改下面文件可以按需合并。
+node_modules\gulp-css-spriter\lib\map-over-styles-and-transform-background-image-declarations.js
+48行开始的if-else if代码块中，替换为下面代码：
+// background-image always has a url 且判断url是否有?__spriter后缀
+if(transformedDeclaration.property === 'background-image' && /\?__spriter/i.test(transformedDeclaration.value)) {
+    transformedDeclaration.value = transformedDeclaration.value.replace('?__spriter','');
+    return cb(transformedDeclaration, declarationIndex, declarations);
+}
+// Background is a shorthand property so make sure `url()` is in there 且判断url是否有?__spriter后缀
+else if(transformedDeclaration.property === 'background' && /\?__spriter/i.test(transformedDeclaration.value)) {
+    transformedDeclaration.value = transformedDeclaration.value.replace('?__spriter','');
+    var hasImageValue = spriterUtil.backgroundURLRegex.test(transformedDeclaration.value);
+    if(hasImageValue) {
+        return cb(transformedDeclaration, declarationIndex, declarations);
+    }
+}

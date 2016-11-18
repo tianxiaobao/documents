@@ -1,0 +1,51 @@
+情况：
+在A分支下拉了B分支的代码，并push到了A分支上。
+解决办法：
+第一步：
+本地A分支回滚到指定版本
+git log 查看正常版本的commit ID
+git reset --hard <commit ID号>
+第二步：
+推送到远程分支，将远程分支上的覆盖掉
+git push -f origin A分支
+
+情况：远程分支已被删除，但执行 git branch -a后依旧显示
+解决办法
+执行 git remote prune origin  清理远程分支
+
+删除本地分支：
+git branch -D 分支名
+
+删除远程分支：
+git push origin –delete 分支名
+查看文件修改
+git diff readme.txt查看文件做了哪些修改
+日志信息：
+git log 显示从最近到最远的提交日志
+git log --pretty=oneline 只显示commit id与提交的信息，避免输出信息太多
+版本回退
+git reset --hard HEAD^  在Git中，用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100
+git reset --hard <commit ID号> 退回指定版本
+如果已经把命令行关掉，不知道所要退回的commit id 使用git reflog
+git reflog  用来记录你的每一次命令
+撤销修改
+git checkout -- file可以丢弃工作区的修改
+命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+假如修改的文件已放到了暂存区，执行git reset HEAD file可以把暂存区的修改撤销掉（unstage），重新放回工作区
+创建分支：
+git checkout -b 分支名 与 git branch 分支名 git checkout 分支名 一样效果
+切换分支：
+git checkout 分支名
+git merge <name> 合并某分支到当前分支：
+git branch -d <name> 删除分支
+
+Git pull 强制覆盖本地文件
+1.  第一种方法
+git fetch --all  
+git reset --hard origin/master
+git fetch下载远程最新的， 然后，git reset master分支重置，把HEAD指向刚刚下载的最新的版本
+2.  第二种方法
+git reset --hard HEAD 
+git pull

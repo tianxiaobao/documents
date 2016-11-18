@@ -1,0 +1,22 @@
+1、安装Node.js
+2、打开Node.js command prompt框 输入命令 npm install –g grunt-cli全局安装grunt。
+3、安装完成后打开cmd进入到项目目录，运行npm install grunt -save-dev会生成一个package.json的文件，打开文件看到所依赖的东西，例如：
+{
+	"name": "tcm",
+	"version": "0.1.0",
+	"description" : "Web Front-end project created by IXW.",
+	"devDependencies": {
+		"grunt": "~0.4.5",
+		"grunt-contrib-jshint": "~0.10.0",
+		"grunt-contrib-uglify": "~0.5.0",
+		"grunt-contrib-concat": "~0.4.0",
+		"grunt-contrib-less": "~1.0.0",
+		"grunt-contrib-clean": "~0.5.0",
+		"grunt-contrib-copy": "~0.5.0",
+		"grunt-contrib-cssmin": "~0.11.0",
+
+		"pngjs": "~0.4.0"
+	}
+}
+4、在项目目录下将依赖的全部安装，执行npm install xxx。
+5、接下来就可以grunt deploy ，grunt preless 或grunt publish。

@@ -1,0 +1,16 @@
+1、竖直居中，利用transform
+.element {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+2、textarea不可缩放
+resize:none;
+
+3、改变input placeholder字体颜色和大小
+通过伪类实现
+input::-webkit-input-placeholder {//webkit内核
+　　color: #D6D0CA;
+    font-size:18px;
+}
+在chorome开发者工具调试时就能直接看到，Settings-Preferences-Elements-Show user agent shadow DOM开启

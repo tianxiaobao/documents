@@ -1,0 +1,66 @@
+ng-app 定义一个应用模块
+ng-controller 定义一个controller
+ng-show true/false
+ng-hide true/false
+ng-repeat 循环数组
+
+filter
+{{product.price | currency}}转化为当地货币格式
+{{'1388123412323' | date:'MM/dd/yyyy @ h:mma'}}格式化为时间
+{{'1388123412323' | date:'yyyy/MM/dd @ h:mma'}}格式化为时间
+{{'octagon gem' | uppercase}}转化为大写
+{{'octagon gem' | lowercase}}转化为小写
+{{'My Description' | limitTo:8}}限制字节数
+<li ng-repeat="product in products | limitTo:3">限制循环的个数
+<li ng-repeat="product in products | orderBy:'price'">按照价格排序
+
+<img ng-src="{{product.src}}"/>图片绑定
+
+<li ng-class="{active:tab===3 }"></li>判断添加class，为true有此类
+
+<element ng-model="name"></element>
+<input>, <select>, <textarea>, 元素支持该指令。
+ng-model 指令绑定了 HTML 表单元素到 scope 变量中，如果 scope 中不存在变量, 将会创建它。
+<select ng-model="num">
+	<option value="1">1</option>
+	<option value="2">2</option>
+</select>
+<textarea ng-model="name"></textarea>
+<input ng-model="name" />
+
+提交表单
+<form ng-submit="setTab()">
+  <input ng-model="color" type="text" />
+  <input type="submit" value="Submit" />
+</form>
+$scope.setTab = function({
+  alert($scope.color);
+})
+
+<form ng-submit="setTab()" novalidate>
+  <input ng-model="user.color" type="text" required />
+</form>取消表单验证，里面有require，require失效
+<input ng-model="user.color" type="text" required />添加验证
+
+<form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+ng-submit="valid && addReview(product)" novalidate>
+valid为true才执行后面的函数
+
+ng-include 包含其他的html模板
+<ng-include src="" ></ng-include>
+
+<product-title></product-title>
+app.directive('productTitle', function(){ 名字为标签的合并，连接符后的单词首字母大写
+ return {
+ restrict: 'E', 标签名字用E   即Eleement
+ templateUrl: 'product-title.html'
+ };
+});
+
+<h3 product-title></h3>
+app.directive('productTitle', function(){ 名字为标签的合并，连接符后的单词首字母大写
+ return {
+ restrict: 'A', A 对应属性
+ templateUrl: 'product-title.html'
+ };
+});

@@ -1,0 +1,138 @@
+app.title = '堆叠柱状图';
+
+option = {
+    title:{
+        text:'标题 ',标题名称
+        link:'http://www.baidu.com', 标题链接
+        subtext:'二级标题', 二级标题
+        sublink :'http://www.baidu.com', 二级标题链接
+        top:20, 离上面的距离
+        left:20 离左边的距离
+    },
+    legend: {
+        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','百度','谷歌','必应','其他'],
+        top:20,离上面的距离
+        left:20, 离左面的距离
+        bottom:0,离下面的距离
+        width:500,宽度
+        height:100, 高度
+        itemWidth:25,图例宽度
+        itemHeight:14,图例高度
+    },
+    grid: {
+        left: '3%',grid 组件离容器左侧的距离
+        right: '4%',grid 组件离容器右侧的距离
+        bottom: '3%',grid 组件离容器下侧的距离
+        width:200,grid 组件的宽度
+        height:200,grid 组件的高度
+        containLabel: true 防止标签溢出容器
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    toolbox: {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },数据区域缩放
+            restore: {},配置项还原
+            saveAsImage: {}保存为图片
+        },
+        left:20,离左侧距离
+        top:20,离上面距离
+        width:200,宽度
+        height:100高度
+    },
+    xAxis : [
+        {     
+            positon:'top',x轴位置
+            offset:'20',x轴偏移
+            name:'x轴',坐标轴名称
+            nameLocation:'end',坐标轴名称显示位置
+            type : 'category',
+            min:0,坐标轴刻度最小值
+            max:100,坐标轴刻度最大值
+            data : ['周一','周二','周三','周四','周五','周六','周日']
+        }
+    ],
+    yAxis : [
+        {
+            positon:'left',y轴位置
+            offset:'20',y轴偏移
+            name:'y轴',坐标轴名称
+            nameLocation:'end',坐标轴名称显示位置
+            type : 'value',
+            min:0,坐标轴刻度最小值
+            max:100,坐标轴刻度最大值
+            data : ['1','2','3','4','5','6','7']
+        }
+    ],
+    series : [
+        {
+            name:'直接访问',
+            type:'bar',
+            data:[320, 332, 301, 334, 390, 330, 320]
+        },
+        {
+            name:'邮件营销',
+            type:'bar',
+            stack: '广告',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'bar',
+            stack: '广告',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+            name:'视频广告',
+            type:'bar',
+            stack: '广告',
+            data:[150, 232, 201, 154, 190, 330, 410]
+        },
+        {
+            name:'搜索引擎',
+            type:'bar',
+            data:[862, 1018, 964, 1026, 1679, 1600, 1570],
+            markLine : {
+                lineStyle: {
+                    normal: {
+                        type: 'dashed'
+                    }
+                },
+                data : [
+                    [{type : 'min'}, {type : 'max'}]
+                ]
+            }
+        },
+        {
+            name:'百度',
+            type:'bar',
+            barWidth : 5,
+            stack: '搜索引擎',
+            data:[620, 732, 701, 734, 1090, 1130, 1120]
+        },
+        {
+            name:'谷歌',
+            type:'bar',
+            stack: '搜索引擎',
+            data:[120, 132, 101, 134, 290, 230, 220]
+        },
+        {
+            name:'必应',
+            type:'bar',
+            stack: '搜索引擎',
+            data:[60, 72, 71, 74, 190, 130, 110]
+        },
+        {
+            name:'其他',
+            type:'bar',
+            stack: '搜索引擎',
+            data:[62, 82, 91, 84, 109, 110, 120]
+        }
+    ]
+};

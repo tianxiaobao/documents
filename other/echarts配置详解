@@ -74,6 +74,14 @@ option = {
         {
             name:'直接访问',
             type:'bar',
+            markPoint: {
+                symbol:'pin',图表标注
+                symbolSize:50,标记的大小
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
             data:[320, 332, 301, 334, 390, 330, 320]
         },
         {

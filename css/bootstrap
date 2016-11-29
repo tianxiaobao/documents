@@ -238,6 +238,8 @@ btn-lg  大按钮
 btn-sm  小按钮
 btn-xs 超小按钮
 <button class="btn btn-primary btn-lg" type="button">大型按钮</button> 
+禁用按钮
+<button class="btn btn-primary btn-block disabled" type="button">通过添加类名disabled禁用按钮</button>
 表单控件大小
 1、input-sm:让控件比正常大小更小
 2、input-lg:让控件比正常大小更大
@@ -265,3 +267,123 @@ fieldset设置了disabled属性，整个域都将处于被禁用状态
     <span class="glyphicon glyphicon-ok form-control-feedback"></span>
 </div>
 
+3-1
+图像
+1、img-responsive：响应式图片，主要针对于响应式设计
+2、img-rounded：圆角图片
+3、img-circle：圆形图片
+4、img-thumbnail：缩略图片
+<img  alt="140x140" src="http://placehold.it/140x140">
+<img  class="img-rounded" alt="140x140" src="http://placehold.it/140x140">
+<img  class="img-circle" alt="140x140" src="http://placehold.it/140x140">
+<img  class="img-thumbnail" alt="140x140" src="http://placehold.it/140x140">
+<img  class="img-responsive" alt="140x140" src="http://placehold.it/140x140">
+
+工作原理
+1、数据行(.row)必须包含在容器（.container）中，以便为其赋予合适的对齐方式和内距(padding)。如：
+<div class="container">
+    <div class="row"></div>
+</div>
+2、在行(.row)中可以添加列(.column)，但列数之和不能超过平分的总列数，比如12。如：
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8"></div>
+    </div>
+</div>
+3、列偏移
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">.col-md-4</div>
+    <div class="col-md-2 col-md-offset-4">列向右移动四列的间距</div>
+    <div class="col-md-2">.col-md-3</div>
+  </div>
+</div>
+
+列排序
+向左移动４个列的距离 col-md-pull-4
+向右移动８个列的距离 col-md-push-8
+
+列的嵌套
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      我的里面嵌套了一个网格
+      <div class="row">
+        <div class="col-md-6">col-md-6</div>
+        <div class="col-md-6">col-md-6</div>
+      </div>
+    </div>
+    <div class="col-md-4">col-md-4</div>
+  </div>
+</div>
+
+下拉菜单（菜单标题）
+<li class="dropdown-header">第一部分菜单头部</li>
+
+按钮（垂直分组）
+<div class="btn-group-vertical">
+  <button class="btn btn-default" type="button">首页</button>
+  <button class="btn btn-default" type="button">产品展示</button>
+  <button class="btn btn-default" type="button">案例分析</button>
+  <button class="btn btn-default" type="button">联系我们</button>
+  <div class="btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">关于我们<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+    	<li><a href="##">公司简介</a></li>
+    	<li><a href="##">企业文化</a></li>
+    	<li><a href="##">组织结构</a></li>
+    	<li><a href="##">客服服务</a></li>
+    </ul>
+  </div>
+</div>
+
+导航（基础样式）
+<ul class="nav nav-pills">
+    <li><a href="##">Home</a></li>
+    <li><a href="##">CSS3</a></li>
+ 	<li><a href="##">Sass</a></li>
+ 	<li><a href="##">jQuery</a></li>
+ 	<li><a href="##">Responsive</a></li>
+</ul>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="##">Home</a></li>
+ 	<li class="disabled"><a href="##">Responsive</a></li>
+</ul>
+自适应导航时更换了另一个类名“nav-justified”
+<ul class="nav nav-tabs nav-justified">
+  <li class="active"><a href="##">Home</a></li>
+  <li><a href="##">CSS3</a></li>
+</ul>
+导航加下拉菜单（二级导航)
+<ul class="nav nav-pills">
+  <li class="active"><a href="##">首页</a></li>
+  <li class="dropdown">
+      <a href="##" class="dropdown-toggle" data-toggle="dropdown">教程<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+          <li><a href="##">CSS3</a></li>
+        <li><a href="##">Sass</a></li>
+        <li><a href="##">jQuery</a></li>
+        <li><a href="##">Responsive</a></li>
+      </ul>
+  </li>
+ <li><a href="##">关于我们</a></li>
+</ul>
+
+面包屑式导航
+<ol class="breadcrumb">
+  <li><a href="#">首页</a></li>
+  <li><a href="#">我的书</a></li>
+  <li class="active">《图解CSS3》</li>
+</ol> 
+
+模态弹出框--触发模态弹出窗2种方法
+<button type="button" data-toggle="modal" data-target="#mymodal" class="btn btn-primary">点击我会弹出模态弹出窗</button>
+<!-- 模态弹出窗 -->
+<div class="modal fade" id="mymodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        11
+        </div>
+    </div>
+</div>

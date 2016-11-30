@@ -61,3 +61,13 @@ $filter('orderBy')(collection, expression, reverse, comparator)
 解释
 {{ 数据 | orderBy : 表达式 : 倒序 : 处理函数}}
 {{ 数据 | orderBy : $index : true : 处理函数}} 此时为倒序
+9、自定义的filter
+var app = angular.module('App');
+app.filter("trim",function(){
+	return function(str,flag){
+		return str.replace(/\s/g,"");
+	}
+});
+自定义filter函数里要return一个函数，return函数里return的是要返回去的值
+第一个参数是要处理的数据，第二个参数是传过来的值，页面中使用，可传递多个参数
+{{"12 12"|trim:true}}直接使用filter函数名称，前面不需要添加filter:,true为第二个参数

@@ -1,0 +1,104 @@
+1、index.html
+<html>
+  <head>
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-ui-router.js"></script>
+    <script src="helloworld.js"></script>
+
+    <style>.active { color: red; font-weight: bold; }</style>
+  </head>
+
+  <body ng-app="helloworld">
+    <a ui-sref="hello" ui-sref-active="active">Hello</a>
+    <a ui-sref="about" ui-sref-active="active">About</a>
+
+    <ui-view></ui-view>
+  </body>
+</html>
+2、helloworld.js
+var myApp = angular.module('helloworld', ['ui.router']);
+myApp.config(function($stateProvider) {
+  var helloState = {
+    name: 'hello',
+    url: '/hello',
+    template: '<h3>hello world!</h3>'
+  }
+
+  var aboutState = {
+    name: 'about',
+    url: '/about',
+    template: '<h3>Its the UI-Router hello world app!</h3>'
+  }
+
+  $stateProvider.state(helloState);
+  $stateProvider.state(aboutState);
+});
+
+3、Add script tags
+<script src="lib/angular.js"></script>
+<script src="lib/angular-ui-router.js"></script>
+<script src="helloworld.js"></script>
+It’s important that angular.js is loaded before angular-ui-router.js (and the helloworld.js script)
+4、Create an Angular module
+var myApp = angular.module('helloworld', ['ui.router']);
+We tell Angular that helloworld is our main module, and that the helloworld module depends on the ui.router module
+5、Create your first state
+var helloState = {
+  name: 'hello',
+  url: '/hello',
+  template: '<h3>hello world!</h3>'
+}
+This simple state definition has three properties:
+name
+The state is named hello.
+url
+When the state is active, the browser’s url will be /hello.
+template
+6、Register states
+Create another state (about). Register both states with $stateProvider in a config block
+myApp.config(function($stateProvider) {
+  var helloState = {
+    name: 'hello',
+    url: '/hello',
+    template: '<h3>hello world!</h3>'
+  }
+
+  var aboutState = {
+    name: 'about',
+    url: '/about',
+    template: '<h3>Its the UI-Router hello world app!</h3>'
+  }
+
+  $stateProvider.state(helloState);
+  $stateProvider.state(aboutState);
+});
+Because $stateProvider is an Angular Provider, you must inject it into a .config() block using Angular 1 Dependency Injection
+7、Viewport
+Add a <ui-view> tag (viewport) to your HTML
+<body ng-app="myApp">
+  <ui-view></ui-view>
+</body>
+The <ui-view> tag is a UI-Router viewport. When a state is activated, the state’s view (the template:) will be loaded into the viewport
+8、Links
+Add some ui-sref links. When clicked, the links will activate a state
+<body ng-app="myApp">
+  <a ui-sref="hello">Hello</a>
+  <a ui-sref="about">About</a>
+
+  <ui-view></ui-view>
+</body>
+A ui-sref is a directive, and behaves similar to an html href. Instead of referencing a url like an href, it references a state. 
+The ui-sref directive automatically builds a href attribute for you (<a href=...></a>) based on your state’s url
+9、Active link
+Add ui-sref-active="active" to the ui-sref links. This directive will add the active css class to the link when the target state is active
+<body>
+  <a ui-sref="hello" ui-sref-active="active">Hello</a>
+  <a ui-sref="about" ui-sref-active="active">About</a>
+
+  <ui-view></ui-view>
+</body>
+Finally, add the style tag and the .active class to style the active link as red and bold.
+<head>
+  ...
+    <style>.active { color: red; font-weight: bolder; }</style>
+</head>

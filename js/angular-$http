@@ -27,7 +27,7 @@ $http({
 });
 then()方法与其他两种方法的主要区别是，它会接收到完整的响应对象，而success()和error()则会对响应对象进行析构
 
-2、跨域实现
+2、跨域实现，post提交参数
 server端用的是php作为接口，在post数据的接口处加上下面代码：
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: X-Requested-With');
@@ -43,3 +43,15 @@ $http({
     'password': '123456'
   }
 });
+3、跨域，请求数据
+myUrl = "http://localhost:8090/api/test?callback=JSON_CALLBACK";
+$http.jsonp(myUrl).success(
+　　function(data){
+　　　　alert(data);
+　　}
+);
+1.angularJS中使用$http.jsonp函数
+2.指定callback和回调函数名，函数名为JSON_CALLBACK时，会调用success回调函数，JSON_CALLBACK必须全为大写。
+3.也可以指定其它回调函数，但必须是定义在window下的全局函数。
+4.url中必须加上callback
+5.当callback为JSON_CALLBACK时，只会调用success，即使window中有JSON_CALLBACK函数，也不会调用该函数。

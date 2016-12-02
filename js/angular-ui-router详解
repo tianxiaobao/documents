@@ -102,3 +102,48 @@ Finally, add the style tag and the .active class to style the active link as red
   ...
     <style>.active { color: red; font-weight: bolder; }</style>
 </head>
+
+二、写法解释
+app.config(['$logProvider', '$stateProvider','$state', function($logProvider, $stateProvider){
+  依赖注入
+  使用$logProvider配置应用程序日志消息的方式
+  $stateProvider 路由控制
+}]);
+
+2.1 $state服务
+angular.module('app')
+.controller('controller', ['$scope','$state',function($scope,$state){
+  $scope.do = function(){
+    $state.go('home');跳转到home路由
+    $state.reload();刷新路由
+  }
+}]);
+方法：
+● go()  路由跳转
+● reload() 刷新路由
+● get()
+属性：
+● current
+● params
+事件
+● $stateChangeError
+● $stateChangeStart
+● $stateChangeSuccess
+● $stateNotFound
+2.2 $state参数传递
+页面中
+<a ui-sref="about({id: 2})">About</a>
+app.js中
+.state('about',{
+  url:"/about:id",
+  templateUrl:"tpl/about.html",
+  controller: "controller"
+});
+controller中
+.controller('controller', ['$scope','$state',function($scope,$state){
+		$state.params; 获取到参数为{id: "2"}
+}
+
+.controller('abCtr', ['$scope','$state','$stateParams',function($scope,$state,$stateParams){
+		$stateParams;获得到的参数
+}]);

@@ -1,0 +1,109 @@
+一、自定义的指令
+1.1 写法
+var app = angular.module("myApp", []);
+app.directive("aB", function() {
+    return {
+        restrict: 'AE',
+        replace: 'true',
+        template : "<h1>自定义指令!<ng-transclude></ng-transclude></h1>",
+        transclude:true
+    };
+});
+创建指令的方式
+元素名 <a-b></a-b>
+属性 <div a-b></div>
+类名 <div class="a-b"></div>
+注释 <!-- directive: a-b -->
+注意由两个单词组成的指令，单词小写中间由-链接，，定义时两个单词在一起，且第二个单词首字母大写。
+
+app.directive()方法在模块中注册了一个新的指令，这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。
+如果你的指令依赖于其他的对象或者服务，比如 $rootScope, $http, 或者$compile，他们可以在这个时间被注入。
+
+restrict – 这个属性用来指定指令在HTML中如何使用，E 作为元素名使用，A 作为属性使用，C 作为类名使用，M 作为注释使用。默认值为 EA,。
+template – 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。更多的情况下你可能会见到 templateUrl， 而不是 template。
+所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
+replace – 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。
+transclude- 制定内部元素被放在模板的<ng-transclude>中。
+
+二、Link函数和Scope
+默认情况下，指令并不会创建新的子scope而是使用父scope。也就是说，如果指令存在于一个controller下，它就会使用这个controller的scope。 
+如何运用scope，我们要用到一个叫做 link 的函数。它由指令定义对象中的link属性配置。让我们来改变一下我们的 helloWorld 指令，当用户在一个输入框中
+输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。 相应的HTML标记如下：
+app.directive('helloWorld', function() {
+  return {
+    restrict: 'AE',
+    replace: true,
+    template: '<p style="background-color:{{color}}">Hello World',
+    link: function(scope, elem, attrs) {
+      elem.bind('click', function() {
+        elem.css('background-color', 'white');
+        scope.$apply(function() {
+          scope.color = "white";
+        });
+      });
+      elem.bind('mouseover', function() {
+        elem.css('cursor', 'pointer');
+      });
+    }
+  };
+});
+我们注意到指令定义中的 link 函数。 它有三个参数：
+scope – 指令的scope。在我们的例子中，指令的scope就是父controller的scope。
+elem – 指令的jQLite(jQuery的子集)包装DOM元素。如果你在引入AngularJS之前引入了jQuery，那么这个元素就是jQuery元素，而不是jQLite元素。
+由于这个元素已经被jQuery/jQLite包装了，所以我们就在进行DOM操作的时候就不需要再使用 $()来进行包装。
+attr – 一个包含了指令所在元素的属性的标准化的参数对象。举个例子，你给一个HTML元素添加了一些属性，那么可以在 link 函数中通过 attrs.someAttribute 来使用它。
+
+三、compile函数
+compile 函数在 link 函数被执行之前用来做一些DOM改造。它接收下面的参数：
+tElement – 指令所在的元素
+attrs – 元素上赋予的参数的标准化列表
+要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。但是如果没有设置 compile 函数，你可以正常地配置 link 函数，
+（有了compile，就不能用link，link函数由compile返回）。compile函数可以写成如下的形式：
+app.directive('test', function() {
+  return {
+    compile: function(tElem,attrs) {
+      //do optional DOM transformation here
+      return function(scope,elem,attrs) {
+        //linking function here
+      };
+    }
+  };
+});
+大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。
+但是对于像 ng-repeat 之类的指令，需要克隆和重复 DOM 元素多次，在 link 函数执行之前由 compile 函数来完成。这就带来了一个问题，为什么我们需要
+两个分开的函数来完成生成过程，为什么不能只使用一个？要回答好这个问题，我们需要理解指令在Angular中是如何被编译的！
+
+四、指令是如何被编译的
+当应用引导启动的时候，Angular开始使用 $compile 服务遍历DOM元素。这个服务基于注册过的指令在标记文本中搜索指令。一旦所有的指令都被识别后，
+Angular执行他们的 compile 方法。如前面所讲的，compile 方法返回一个 link 函数，被添加到稍后执行的 link 函数列表中。这被称为编译阶段。
+如果一个指令需要被克隆很多次（比如 ng-repeat），compile函数只在编译阶段被执行一次，复制这些模板，但是link 函数会针对每个被复制的实例被执行。
+所以分开处理，让我们在性能上有一定的提高。这也说明了为什么在 compile 函数中不能访问到scope对象。 在编译阶段之后，就开始了链接（linking）阶段。
+在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
+
+五、改变指令的Scope
+默认情况下，指令获取它父节点的controller的scope。但这并不适用于所有情况。如果将父controller的scope暴露给指令，那么他们可以随意地修改 scope 的属性。
+在某些情况下，你的指令希望能够添加一些仅限内部使用的属性和方法。如果我们在父的scope中添加，会污染父scope。 其实我们还有两种选择：
+一个子scope – 这个scope原型继承子父scope。
+一个隔离的scope – 一个孤立存在不继承自父scope的scope。
+这样的scope可以通过指令定义对象中 scope 属性来配置。下面的代码片段是一个例子：
+app.directive('helloWorld', function() {
+  return {
+    scope: true,  // use a child scope that inherits from parent
+    restrict: 'AE',
+    replace: 'true',
+    template: '<h3>Hello World!!</h3>'
+  };
+});
+上面的代码，让Angular给指令创建一个继承自父socpe的新的子scope。 另外一个选择，隔离的scope：
+app.directive('helloWorld', function() {
+  return {
+    scope: {},  // use a new isolated scope
+    restrict: 'AE',
+    replace: 'true',
+    template: '<h3>Hello World!!</h3>'
+  };
+});
+这个指令使用了一个隔离的scope。隔离的scope在我们想要创建可重用的指令的时候是非常有好处的。通过使用隔离的scope，我们能够保证我们的指令是自包含的，
+可以被很容易的插入到HTML应用中。 它内部不能访问父的scope，所保证了父scope不被污染。 在我们的 helloWorld 指令例子中，如果我们将 scope 设置成 {}，
+那么上面的代码将不会工作。 它会创建一个新的隔离的scope，那么相应的表达式 {{color}} 会指向到这个新的scope中，它的值将是 undefined. 
+使用隔离的scope并不意味着我们完全不能访问父scope的属性。其实有一些技术可以允许我们访问父scope的属性，甚至监视他们的变化。

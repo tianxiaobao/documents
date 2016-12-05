@@ -6,7 +6,8 @@ app.directive("aB", function() {
         restrict: 'AE',
         replace: 'true',
         template : "<h1>自定义指令!<ng-transclude></ng-transclude></h1>",
-        transclude:true
+        transclude:true,
+        scope:false
     };
 });
 创建指令的方式
@@ -24,6 +25,13 @@ template – 这个属性规定了指令被Angular编译和链接（link）后�
 所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
 replace – 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。
 transclude- 制定内部元素被放在模板的<ng-transclude>中。
+scope
+（1）默认值false。表示继承父作用域;
+（2）true。表示继承父作用域，并创建自己的作用域（子作用域）;
+（3）{}。表示创建一个全新的隔离作用域；
+当为false时候，儿子继承父亲的值，改变父亲的值，儿子的值也随之变化，反之亦如此。（继承不隔离）
+当为true时候，儿子继承父亲的值，改变父亲的值，儿子的值随之变化，但是改变儿子的值，父亲的值不变。（继承隔离）
+当为{}时候，没有继承父亲的值，所以儿子的值为空，改变任何一方的值均不能影响另一方的值。（不继承隔离）
 
 二、Link函数和Scope
 默认情况下，指令并不会创建新的子scope而是使用父scope。也就是说，如果指令存在于一个controller下，它就会使用这个controller的scope。 

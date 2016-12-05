@@ -107,3 +107,9 @@ app.directive('helloWorld', function() {
 可以被很容易的插入到HTML应用中。 它内部不能访问父的scope，所保证了父scope不被污染。 在我们的 helloWorld 指令例子中，如果我们将 scope 设置成 {}，
 那么上面的代码将不会工作。 它会创建一个新的隔离的scope，那么相应的表达式 {{color}} 会指向到这个新的scope中，它的值将是 undefined. 
 使用隔离的scope并不意味着我们完全不能访问父scope的属性。其实有一些技术可以允许我们访问父scope的属性，甚至监视他们的变化。
+
+六、缓存方式
+app.run(["$templateCache", function($templateCache) { 
+ $templateCache.put("hello.html", 
+ "<div><h1>Hi 我是林炳文~~~</h1></div>"); 
+}]);

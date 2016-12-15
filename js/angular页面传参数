@@ -1,0 +1,14 @@
+1定义接收参数
+.state('fixedApply',{
+  params:{'id':null,'name':null},
+  url:"/resourcePlat/generalReport/generalReport",
+  templateUrl:"application/resourcePlat/generalReport/generalReport.html",
+  controller:'generalReportCtrl'
+})
+2、传参
+1）页面ui-sref="fixedApply({{'id':'1','name':'zhangsan'}})"
+2）controller里
+$state.go('fixedApply',{'step':'1','fixed':true})
+
+3、接收参数
+在目标页面的controller里注入$stateParams，然后 "$stateParams.参数名" 获取

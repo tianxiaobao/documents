@@ -1,7 +1,14 @@
-1定义接收参数
+1、定义接收参数
+1）
 .state('fixedApply',{
   params:{'id':null,'name':null},
   url:"/resourcePlat/generalReport/generalReport",
+  templateUrl:"application/resourcePlat/generalReport/generalReport.html",
+  controller:'generalReportCtrl'
+})
+2）
+.state('fixedApply',{
+  url:"/resourcePlat/resourceApply/fixedHolding/fixed-apply/:step&&:fixed",
   templateUrl:"application/resourcePlat/generalReport/generalReport.html",
   controller:'generalReportCtrl'
 })

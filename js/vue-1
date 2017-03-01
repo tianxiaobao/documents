@@ -1,0 +1,56 @@
+在html中引入vuejs
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<div id="app">
+  {{message}} //数据渲染
+  <span v-bind:title="title"> //监听属性
+    Hello Vue!
+  </span>
+  <p v-if="seen">Now you see me</p> 判断是否显示
+  <ol>
+    <li v-for="todo in todos">  循环
+      {{ todo.text }}
+    </li>
+  </ol>
+  <button v-on:click="reverseMessage">Reverse Message</button>  事件监听
+  <input v-model="message">   双向绑定
+  <ol>
+    <todo-item></todo-item> 自定义组件
+  </ol>
+  <ol>
+    <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+  </ol>
+</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!',
+    title: 'Hello Vue!',
+    seen:true,
+    todos: [
+      { text: 'Learn JavaScript' },
+      { text: 'Learn Vue' },
+      { text: 'Build something awesome' }
+    ],
+    groceryList: [
+      { text: 'Vegetables' },
+      { text: 'Cheese' },
+      { text: 'Whatever else humans are supposed to eat' }
+    ]
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('')
+    }
+  }
+})
+组件
+Vue.component('todo-item', {
+  template: '<li>This is a todo</li>'
+})
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+</script>

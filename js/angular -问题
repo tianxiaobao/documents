@@ -1,0 +1,12 @@
+一、ng-init大于controller
+<div ng-app="app" ng-controller="controller" ng-init="name=5;ming=3;">
+  {{name*ming}} 
+</div>
+<script>
+	var app = angular.module('app',[]);
+	app.controller('controller', function($scope){
+		$scope.name = '2';
+		$scope.ming = '4';
+	})
+</script>
+结果是15 ng-init赋值覆盖掉了controller里的值

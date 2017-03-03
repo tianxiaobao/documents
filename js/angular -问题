@@ -10,3 +10,12 @@
 	})
 </script>
 结果是15 ng-init赋值覆盖掉了controller里的值
+
+二、自定义指令 默认是EA
+限制指令只能通过特定的方式来调用
+app.directive("runoobDirective", function() {
+    return {
+        restrict : "A",
+        template : "<h1>自定义指令!</h1>"
+    };
+});

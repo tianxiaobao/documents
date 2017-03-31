@@ -1,0 +1,30 @@
+*{
+		margin: 0;
+		padding: 0;
+	}
+	.head{
+		height: 50px;
+		background-color: #f00;
+	}
+	.content{
+		background-color: #0f0;
+	}
+	.left{
+		width: 200px;
+		height: 100px;
+		position: absolute;
+		left: 0;
+		background-color: #0f0;
+	}
+	.right{
+		height: 300px;
+		margin-left: 200px;
+		background-color: #00f;
+	}
+</style>
+<div class="head"></div>
+<div class="content">
+	<div class="left"></div>
+	<div class="right"></div>
+</div>
+特点：右侧自适应宽度，左侧菜单的高度会比右侧小，背景色用父级的背景色填补

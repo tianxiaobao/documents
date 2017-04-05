@@ -84,3 +84,6 @@ $middle	boolean	true if the repeated element is between the first and last in th
 $last	boolean	true if the repeated element is last in the iterator.
 $even	boolean	true if the iterator position $index is even (otherwise false).
 $odd	boolean	true if the iterator position $index is odd (otherwise false).
+
+<img ng-src="http://www.gravatar.com/avatar/{{hash}}" alt="Description" />
+可以出现绑定的值

@@ -1,4 +1,0 @@
-KeyDown,KeyPress根本区别是:
-KeyDown返回键盘的代码, 然后由TranslateMessage函数翻译成成字符, 
-KeyPress返回字符值 
-因此在KeyDown中返回的是键盘的代码, 而KeyPress返回的是ASCII字符

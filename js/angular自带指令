@@ -1,0 +1,13 @@
+ng-keydown,ng-keypress根本区别是:
+keydown, 然后由TranslateMessage函数翻译成成字符, 
+keypress返回字符值 
+因此在keydown中返回的是键盘的代码, 而keypress返回的是ASCII字符
+
+ng-list使用
+<form name="myForm" ng-controller="ExampleController">
+   <label>List: <input name="namesInput" ng-model="names" ng-list="," required></label>
+   <span class="error" ng-show="myForm.namesInput.$error.required">
+   Required!
+   </span>
+</form>
+默认是用逗号分隔，可以更换为ng-list=" | ",输入时用逗号分隔，得到的是一个数组。

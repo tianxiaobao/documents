@@ -11,3 +11,76 @@ ng-list使用
    </span>
 </form>
 默认是用逗号分隔，可以更换为ng-list=" | ",输入时用逗号分隔，得到的是一个数组。
+默认条件下不允许空格，可设置ng-trim="false"。 ng-list="&#10;" 换行符
+
+ng-maxlength
+<form name="form">
+<input type="text" ng-model="model" name="input" ng-maxlength="maxlength" /><br>
+input valid? = {{form.input.$valid}}
+model = {{model}}
+</form>
+不会限制输入的个数，当超出时model值为空。
+
+ng-minlength与ng-maxlength类似，当输入值小于某个数值时，model值为空。
+
+ng-model-options
+<div ng-model-options="{ allowInvalid: true, debounce: 200 }">
+  <form ng-model-options="{ updateOn: 'blur', allowInvalid: '$inherit' }">
+    <input ng-model-options="{ updateOn: 'default', allowInvalid: '$inherit' }" />
+  </form>
+</div>
+可以设置何时去更新model
+
+ng-mousedown 鼠标按下
+ng-mouseup 鼠标提起
+ng-mousemove 鼠标移动
+ng-mouseenter 
+ng-mouseleave
+ng-mouseover
+ng-mouseout
+不论鼠标指针穿过被选元素或其子元素，都会触发 mouseover 事件。对应mouseout
+只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。对应mouseleave
+
+ng-non-bindable
+<div ng-non-bindable>Ignored: {{1 + 2}}<span>{{1+2}}</span></div>
+忽略绑定，里面的子元素也会忽略。
+
+ng-options
+<select ng-init="selectedName = names[0]" ng-model="selectedName" ng-options="x for x in names">
+app.controller('myCtrl', function($scope) {
+    $scope.names = ["Google", "Runoob", "Taobao"];
+});
+<select ng-model="selectedSite" ng-options="x.site for x in sites"></select>
+选择的是x这个对象
+$scope.sites = [
+    {site : "Google", url : "http://www.google.com"},
+    {site : "Runoob", url : "http://www.runoob.com"},
+    {site : "Taobao", url : "http://www.taobao.com"}
+];
+<select ng-model="selectedSite" ng-options="x for (x, y) in sites"></select>
+选择的是y的值
+$scope.sites = {
+    site01 : "Google",
+    site02 : "Runoob",
+    site03 : "Taobao"
+};
+<select ng-model="selectedCar" ng-options="y.brand for (x, y) in cars"></select>
+选择的是y的值
+$scope.cars = {
+car01 : {brand : "Ford", model : "Mustang", color : "red"},
+car02 : {brand : "Fiat", model : "500", color : "white"},
+car03 : {brand : "Volvo", model : "XC90", color : "black"}
+};
+
+ng-pattern 
+正则表达式
+
+ng-readonly 只读属性，设置为true
+
+ng-repeat
+$index	number	iterator offset of the repeated element (0..length-1)
+$first	boolean	true if the repeated element is first in the iterator.
+$middle	boolean	true if the repeated element is between the first and last in the iterator.
+$last	boolean	true if the repeated element is last in the iterator.
+$even	boolean	true if the iterator position $index is even (otherwise false).
+$odd	boolean	true if the iterator position $index is odd (otherwise false).

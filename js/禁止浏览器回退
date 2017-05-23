@@ -1,0 +1,5 @@
+history.pushState(null, null, document.URL);
+  window.addEventListener('popstate', function () {
+  history.pushState(null, null, document.URL);
+});
+        这种方式，可以消除 后退的所有动作。包括 键盘、鼠标手势等产生的后退动作。

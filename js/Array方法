@@ -1,0 +1,20 @@
+1、数组的判断
+var a = [1,2,3]
+Array.isArray(a) true
+
+typeof(1) number
+typeof('1') string
+typeof(false) boolean
+var a={}; typeof(a) object
+var a=[]; typeof(a) object
+var a = new Date(); typeof(a) object
+typeof(null) object
+var a;  typeof(a) undefined
+typeof(undefined) undefined
+function a(){} ;  typeof(a) function
+
+2、数组内容的判断
+every可以判断数组内的内容是否全部满足callback函数的条件，而some则可以判断数组内是否有内容满足callback函数的条件
+function isBigEnough(element,index,array){return element >=10;}
+[12,5,8,130,44].every(isBigEnough); false
+[12,5,8,130,44].some(isBigEnough); true

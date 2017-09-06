@@ -18,3 +18,44 @@ every可以判断数组内的内容是否全部满足callback函数的条件，�
 function isBigEnough(element,index,array){return element >=10;}
 [12,5,8,130,44].every(isBigEnough); false
 [12,5,8,130,44].some(isBigEnough); true
+includes方法则可以查找是否具体存在某一个元素，或者从某个具体的位置开始是否存在某个元素
+语法：
+arr.includes(searchElement)
+arr.includes(searchElement, fromIndex)
+参数：
+searchElement 需要查找的元素
+fromIndex 可选 指定开始查询位置
+返回：true，false
+var a=[1,2,3];
+a.includes(1,0); true
+a.includes(1,1); false
+
+3、数组内容的获取 4个方法
+find方法会返回满足你条件的第一个元素，而findIndex会返回满足你条件的第一个元素的位置
+function isBigEnough(element){returnelement >=15;}
+console.log([12, 5, 8, 130, 5, 44].find(isBigEnough)); // 130 返回满足你条件的第一个元素
+console.log([12, 5, 8, 130, 5, 44].findIndex(isBigEnough)); // 3 返回满足你条件的第一个元素的位置
+indexOf、lastIndexOf方法则和includes方法很相似，只不过前两个返回的是具体的位置，includes返回的是布尔值
+console.log([12, 5, 8, 130, 5, 44].indexOf(5)); // 1
+console.log([12, 5, 8, 130, 5, 44].lastIndexOf(5)); // 4
+console.log([12, 5, 8, 130, 5, 44].some(isBigEnough)); // true
+console.log([12, 5, 8, 130, 5, 44].every(isBigEnough)); // false
+console.log([12, 5, 8, 130, 5,44].includes(5,4));// true
+
+4、数组的构造 6个方法
+在这一组中都是可以返回一个新数组，同时不会改变原数组的方法，因此把它们归为数组的构造这一类，它们都可以构造出一个新的数组
+Array.from()，Array.of()是ES6中新增的方法。需要特别指出的是， Array.from()，Array.of()方法是静态方法，只能通过Array对象来调用
+function f(){return Array.from(arguments);}
+var a = f(1, 2, 3);
+Array.of(1,2,3);
+arr1.concat(arr2,arr3)
+
+var myArr =[1,2,3,4,5];
+var result =myArr.filter(v=>v<3)
+console.log(result)
+
+let numbers = [1, 5, 10, 15];
+let doubles = numbers.map((x) => {
+   return x * 2;
+});
+

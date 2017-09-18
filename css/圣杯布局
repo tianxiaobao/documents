@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+#parents {
+	width: 600px;
+	border: 2px solid;
+	margin: 0 auto;
+}
+#main {
+	padding-left: 100px;
+	padding-right: 150px;
+	overflow: hidden;
+}
+#top {
+	background: #666;
+}
+#left {
+	background: #E79F6D;
+	width: 100px;
+	float: left;
+	position: relative;
+	left: -100px;
+}
+#content {
+	background: #D6D6D6;
+	float: left;
+	width: 100%;
+	margin-left: -100px;
+}
+#right {
+	background: #77BBDD;
+	float: left;
+	width: 150px;
+	position: relative;
+	left: 150px;
+	margin-left: -150px;
+}
+#foot {
+	background: #666;
+	clear: both;
+}
+#left,#content,#right {
+    padding-bottom: 2000px;
+    margin-bottom: -2000px;
+}//三列的等高问题
+</style>
+<body>
+<div id="parents">
+	<div id="top">这是Top!</div>
+	<div id="main">
+		<div id="left">这是Left!</div>
+		<div id="content">这是Content!</div>
+		<div id="right">这是Right!</div>
+	</div>
+	<div id="foot">这是Foot!</div>
+</div>
+</body>
+</html>

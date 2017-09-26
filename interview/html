@@ -25,3 +25,60 @@ XHTML 文档必须拥有根元素。
 img标签上的title和alt属性区别是什么?
 alt属性则是用来指定替换文字，只能用在img、area和input元素中（包括applet元素），用于网页中图片无法正常显示时给用户提供文字说明使其了解图像信息。
 title是提供额外说明文字的。alt属性还具有搜索引擎优化效果，因为搜素引擎是无法直接读取图像的信息的，alt可以为其提供文字信息所以对搜索引擎比较友好
+
+不定宽高水平垂直居中
+方法一：
+.mid {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
+}
+方法二：
+设置父元素
+{
+	display: flex;
+	align-items: center;
+	//（纵轴）方向上的对齐方式 还有其他值flex-start位于顶部flex-end位于底部
+	justify-content: center;
+	//（横轴）方向上的对齐方式 还有其他值flex-start位于左侧flex-end位于右侧
+}
+
+opacity作用于元素，以及元素内的所有内容的透明度
+rgba()只作用于元素的颜色或其背景色，设置rgba透明的元素的子元素不会继承透明效果
+background:rgba(212,0,0,0.2)
+
+标准盒模型包括padding，margin，border，content，content不包括其他部分
+Ie盒模型padding，margin，border，content，content包括了border与padding
+box-sizing:border-box 设置成IE盒模型，设置的border与padding均在width里绘制
+box-sizing:content-box 设置成标准盒模型，在宽度和高度之外绘制元素的内边距和边框
+
+块元素,独立在一行的元素，他们后面会自动带有换行符,比如像div  , p  ,form , ul往独自占领一行。在没有设置宽度的情况下，默认宽度总是其父元素的宽度
+行内元素,不会独立出现在一行，单独使用的时候后面不会有换行符的元素,比如像span,strong, img, a,这些元素，默认的高宽，总是其内容的高宽。并且，margin
+和padding值，只有左右有效
+
+Web语义化是指在进行HTML结构、表现、行为设计时，尽量使用语义化的标签，使程序代码简介明了，易于进行Web操作和网站SEO，方便团队协作的一种标准，以图实现
+一种“无障碍”的Web开发
+
+Cookies:服务器和客户端都可以访问；大小只有4KB左右；每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用
+域，不可以跨域调用
+sessionStorage 的数据在浏览器关闭后自动删除
+localStorage 长期存储数据，浏览器关闭后数据不丢失
+
+Html全局属性
+Class，id，style，title，tabindex，accessKey（访问元素的键盘快捷键），dir（元素中内容的文本方向）
+
+window.onload必须等到页面内包括图片的所有元素加载完毕后才能执行。
+window.onload不能同时编写多个，如果有多个window.onload方法，只会执行一个
+window.onload没有简化写法
+$(document).ready()是DOM结构绘制完毕后就执行，不必等到加载完毕。
+$(document).ready()可以同时编写多个，并且都可以得到执行
+$(document).ready(function(){})可以简写成$(function(){});
+
+HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。GET和POST能做的事情是一样一样的。你要给GET加上request body，
+给POST带上url参数，技术上是完全行的通的。
+GET把参数包含在URL中，POST通过request body传递参数
+对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200(返回数据);
+而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok(返回数据)。
+
+<meta http-equiv="Pragma" contect="no-cache">不允许缓存

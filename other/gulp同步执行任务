@@ -1,0 +1,64 @@
+gulp同步执行任务，解决task依赖问题
+用到了run-sequence插件，写法上每个task需要return
+
+
+//导入工具包 require('node_modules里对应模块')
+var gulp     = require('gulp'),
+	del = require('del'),
+	htmlmin  = require('gulp-htmlmin'),
+	imagemin = require('gulp-imagemin'),
+	rev = require('gulp-rev'),
+	revCtrl = require('gulp-rev-collector'),
+	runSequence = require('run-sequence');
+// 文件删除
+gulp.task('del',function(){
+	return del(['dist/','rev/']);
+});
+//压缩html
+gulp.task('htmlMin',function() {
+	var options = {
+        removeComments: true,//清除HTML注释
+        collapseWhitespace: true,//压缩HTML
+        collapseBooleanAttributes: true,//省略布尔属性的值 <input checked="true"/> ==> <input />
+        removeEmptyAttributes: true,//删除所有空格作属性值 <input id="" /> ==> <input />
+        removeScriptTypeAttributes: true,//删除<script>的type="text/javascript"
+        removeStyleLinkTypeAttributes: true,//删除<style>和<link>的type="text/css"
+        minifyJS: true,//压缩页面JS
+        minifyCSS: true//压缩页面CSS
+    };
+    return gulp.src('welcome/*.html')
+    	.pipe(htmlmin(options))
+    	.pipe(rev())
+    	.pipe(gulp.dest('dist',{base: 'dist/'}))
+    	.pipe(rev.manifest())
+		.pipe(gulp.dest('rev/html'));
+});
+//压缩图片
+gulp.task('imgMin',['htmlMin'],function () {
+	var options = {
+		optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
+        progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
+        interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
+        multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化
+	}
+	return gulp.src('welcome/img/*.{jpg,png,ico,gif}')
+		.pipe(imagemin(options))
+		.pipe(rev())
+		.pipe(gulp.dest('dist/img',{base: 'dist/'}))
+    	.pipe(rev.manifest())
+		.pipe(gulp.dest('rev/img'));
+});
+// html中引用替换
+gulp.task('rev_html',['imgMin'], function() {
+	return gulp.src(['rev/**/*.json', 'dist/*.html'])
+		.pipe(revCtrl())
+		.pipe(gulp.dest('dist'));
+});
+//默认任务
+// gulp.task('default', ['del','htmlMin','imgMin','rev_html']);
+gulp.task('default', function(callback) {
+    runSequence('del',
+        ['htmlMin', 'imgMin'],
+        'rev_html',
+        callback);
+});

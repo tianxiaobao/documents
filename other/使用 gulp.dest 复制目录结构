@@ -1,0 +1,42 @@
+即复制文件到另外一个目录时保持原有文件的目录结构
+> gulp coy a directory file and its original folder structure are preserved.
+
+假设我们的目录结构是这样的
+├── src/
+│     └── vendor/
+│            └── jquery.js
+└── gulpfile.js
+
+我们需要复制 jquery.js 到 dest 目录, 并保持 jquery.js 原有的目录层次结构
+
+------------------------------
+
+// 一般我们是这样复制文件的
+gulp.src('./src/vendor/jquery.js')
+    .pipe(gulp.dest('dest'));
+
+但得到的结果不符合我们的预期, 只是单纯的 copy 了文件, 目录结构没有复制过来
+├── src/
+└── dest/
+       └── jquery.js
+
+// 当我们加上 base 参数后
+gulp.src('./src/vendor/jquery.js', {base: '.'})
+    .pipe(gulp.dest('dest'));
+
+接近我们想要结果了, 连同目录结构都复制了过来
+├── src/
+└── dest/
+       └── src/
+              └── vendor/
+                     └── jquery.js
+
+// 我们可以再修改下 base 以去掉 src 这一层
+gulp.src('./src/vendor/jquery.js', {base: './src'})
+    .pipe(gulp.dest('dest'));
+
+最终的结果
+├── src/
+└── dest/
+       └── vendor/
+              └── jquery.js

@@ -1,0 +1,175 @@
+Typeof返回值
+Boolean，string，number，function，object，undefined
+Cookie与session区别
+Cookie保存在客户端，session保存在服务端用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件或内存中。session 的运行依赖 session id，而 session id 是存在 cookie 中的，也就是说，如果浏览器禁用了 cookie ，同时 session 也会失效（但是可以通过其它方式实现，比如在 url 中传递 session_id）。
+通常session cookie是不能跨窗口使用的，当你新开了一个浏览器窗口进入相同页面时，系统会赋予你一个新的sessionid，这样我们信息共享的目的就达不到了，此时我们可以先把sessionid保存在persistent cookie中，然后在新窗口中读出来，就可以得到上一个窗口SessionID了，这样通过session cookie和persistent cookie的结合我们就实现了跨窗口的session tracking（会话跟踪）
+Persistent Cookies会被保存在一个浏览器的一个子文件夹中, 除非手动删除或者浏览器定期清理, 否则会一直存在
+
+监听storage
+https://blog.csdn.net/ruangong1203/article/details/52841135
+
+为啥要给列表类组件设个key
+key的作用主要是为了高效的更新虚拟DOM
+
+栅格系统
+https://blog.csdn.net/weixin_35955795/article/details/70194764
+
+call 、bind 、 apply 这三个函数的第一个参数都是 this 的指向对象，第二个参数差别就来了：
+call的参数是直接放进去的，第二第三第n个参数全都用逗号分隔，直接放到后面  obj.myFun.call(db,'成都', ... ,'string' )；
+apply的所有参数都必须放在一个数组里面传进去  obj.myFun.apply(db,['成都', ..., 'string' ]);
+bind除了返回是函数以外，它 的参数和call 一样。
+
+为什么使用严格模式:
+消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;
+消除代码运行的一些不安全之处，保证代码运行的安全；
+提高编译器效率，增加运行速度；
+为未来新版本的Javascript做好铺垫。
+不允许变量重名
+Webpack优化
+https://segmentfault.com/a/1190000006843916
+
+跨域
+https://www.cnblogs.com/yongshaoye/p/7423881.html
+http://www.ruanyifeng.com/blog/2016/04/cors.html
+fetch见解
+https://segmentfault.com/a/1190000012836882
+promise封装ajax
+https://www.cnblogs.com/kazetotori/p/6037940.html
+前端优化
+https://blog.csdn.net/u010620152/article/details/62421505
+
+白屏时间
+
+Post 方法Content-type值
+https://blog.csdn.net/jam_yin/article/details/51837204
+
+
+继承
+http://es6.ruanyifeng.com/#docs/class-extends
+
+事件
+面向对象
+作用域
+闭包
+
+圣杯布局与双飞翼布局
+https://www.zhihu.com/question/21504052
+flex布局
+http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+
+/*清除浮动代码*/
+.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0} 
+.clearfloat{zoom:1}
+
+opacity会继承父元素的 opacity 属性，而RGBA设置的元素的后代元素不会继承不透明属性
+
+html5与css3
+http://blog.csdn.net/chandoudeyuyi/article/details/69206236
+
+字符串去重
+for遍历 indexof() search() 对象属性
+http://blog.csdn.net/admin_yi/article/details/54925440
+
+多层嵌套回调
+https://segmentfault.com/a/1190000007535316
+
+
+一点资讯
+
+js方面主要问了闭包，js继承，js数组去重等一些常见问题
+css问了关于BFC是什么，html5动画，clear的用法，盒模型，css3box-sizing属性
+归并排序是什么
+
+数组去重 [...new Set(arr)]
+
+如果需要在html页面上设置不缓存，这在<head>标签中加入如下语句：
+1 <meta http-equiv="pragma" content="no-cache"> http1.0
+2 <meta http-equiv="cache-control" content="no-cache">http1.1
+3 <meta http-equiv="expires" content="0">过时期限值
+
+css选择器 权值计算
+!important > 行内样式>ID选择器 > 类选择器 > 标签 > 通配符 > 继承 > 浏览器默认属性
+               1           1        1         1
+
+html
+HTML5 之前的 HTML 版本是 4.01
+IE盒子模型指的是IE5.5，IE6及其以后，盒模型都为 content-box
+
+websocket
+
+var ws = new WebSocket(“ws://localhost:8080”);
+ws.onopen = function()
+{  console.log(“open”);
+  	ws.send(“hello”);
+};
+ws.onmessage = function(evt)
+{
+  console.log(evt.data)
+};
+ws.onclose = function(evt)
+{
+  console.log(“WebSocketClosed!”);
+};
+ws.onerror = function(evt)
+{
+  console.log(“WebSocketError!”);
+};
+
+二叉树的非递归实现
+https://segmentfault.com/a/1190000011053277
+
+css层叠关系
+硬件加速
+var let不同
+箭头函数和普通函数区别 this
+vue虚拟dom树
+jquery操作dom更改数据和vue diff
+
+监听localstorage变换 两个页面 window.onstorage = function(){
+	
+}
+
+promise优势
+
+vuex 存在多个同名action moudles
+action内可异步，mutation 只能同步
+http://blog.csdn.net/weixin_38788947/article/details/76034380
+
+(Git)合并多个commit
+
+
+var obj = [1,2,3]
+for(let i of obj){
+	console.log(i);
+	//of 是值1,2,3
+}
+for(let i in obj){
+	console.log(i);
+	//in 是索引值0,1,2
+}
+
+块级上下文bfc
+
+Vue
+Vue生命周期及每个阶段执行哪些操作？
+Created，mounted，destory里都写什么？
+Watch与updated使用区别？
+$ref的使用？
+$nextTick何时使用？
+改变data里的某个值，vue怎么去更新的？
+Vue diff算法
+组件间的通信方式有哪些
+Slot的使用
+Vue原理
+Vue单向数据流
+v-for中:key的作用
+Vuex
+Vuex的组成
+Mutation与action的触发方法
+Mutation与action的区别
+Vuex的模块管理
+Html
+常见的块级元素与行内元素
+Cookie与session区别，联系
+
+Typeof返回值，与insteadof区别

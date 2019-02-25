@@ -1,7 +1,15 @@
 Typeof返回值
 boolean，string，number，function，object(对象,数组和null)，undefined(未定义变量与undefined)，symbol(ES6)
 typeof(window) object
+Array.isArray([]) true 判断数组
 instanceof来检测某个对象是不是另一个对象的实例
+let num = 1
+num instanceof Number // false 不是对象，是基本类型
+num = new Number(1)
+num instanceof Number // true
+String(1) instanceof String //false 基础类型转换，还是基础类型
+new String(1) instanceof String //true
+
 
 Cookie与session区别
 Cookie保存在客户端，session保存在服务端用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件或内存中。session 的运行依赖 session id，而 session id 是存在 cookie 中的，也就是说，如果浏览器禁用了 cookie ，同时 session 也会失效（但是可以通过其它方式实现，比如在 url 中传递 session_id）。

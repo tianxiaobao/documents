@@ -67,6 +67,8 @@ https://blog.csdn.net/jam_yin/article/details/51837204
 http://es6.ruanyifeng.com/#docs/class-extends
 
 事件
+阻止事件捕获 window.event? window.event.cancelBubble = true : e.stopPropagation();
+阻止事件冒泡 event.stopPropagation()或event.stopImmediatePropagation();
 面向对象
 作用域
 闭包
